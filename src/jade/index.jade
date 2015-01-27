@@ -1,0 +1,272 @@
+doctype html(lang='en')
+head
+	meta(charset='utf-8')
+	title Modern Web A11y Workshop - SXSW Interactive 2015
+	script(src='../bower_components/webcomponentsjs/webcomponents.js')
+	link(rel='import', href='../bower_components/slide-deck/a-slide-deck.html')
+	link(rel='import', href='../bower_components/slide-deck/a-slide.html')
+	link(rel='import', href='../bower_components/slide-deck/code-block.html')
+	link(rel='import', href='elements/flex-grid.html')
+	link(rel='import', href='elements/flex-line.html')
+	link(rel='stylesheet', href='theme.css')
+body(is='a-slide-deck', unresolved='')
+	a-slide.start
+		h1 Modern Web A11y Workshop
+		h3(style='margin-top:-.4em; font-weight:400') SXSW Interactive 2015
+		p
+			a(href='http://www.moderna11y.com') Patrick Fox
+			a(href='https://twitter.com/patrickfox') @patrickfox
+			a(href='https://twitter.com/razorfish') @razorfish
+			a(href='https://twitter.com/search?q=%23moderna11y') #moderna11y
+	a-slide(data-state="intro")
+		h2 Introduction
+	
+	a-slide
+		h3 Terminology
+		ul
+			li(part='') a11y = accessibility
+			li(part='') assistive technology = AT
+			li(part='') primary screen readers
+				ul
+					li JAWS, NVDA, WindowEyes - Windows
+					li VoiceOver - MacOS, iOS
+					li TalkBack - Android
+			li(part='') WAI-ARIA
+			li(part='') WCAG2
+			li(part='') Rehabilitation Act, Section 508
+			li(part='') Americans w/Disabilities Act (ADA)
+			li(part='') Device-independence - works w/keyboard and mouse
+
+
+	a-slide
+		h3 Accessibility is important
+		ul
+			li(part='') ADA mandates equal access
+			li(part='') (avoid lawsuits, risk mitigation)
+			li(part='') Benefits everyone
+				ul
+					li accessible = machine-readable = voice control is the future...
+					li temporary disabilities, curb cuts, door openers
+	a-slide
+		h3 Standards compliance vs. true accessibility
+		ul
+			li(part='') "Standards compliant" is not good enough
+			li(part='') Make experiences user-friendly for people of all abilities
+	a-slide(data-state="intro")
+		h2 Tools and Techniques
+	a-slide
+		h3 "Semantic" Markup
+		ul
+			li(part='') Semantic markup and logical hierarchy are the foundation
+			li(part='') Generic is sometimes better
+			li(part='') Buttons vs. anchors vs. generic elements
+			li(part='') Some HTML5 sectioning elements spoken as landmarks
+			li(part='') More important: how is markup spoken?
+	a-slide 
+		h3 Content Navigation
+		ul
+			li(part='') How do people understand your content non-visually?
+			li(part='') Content hierarchy
+			li(part='') How do people navigate page content?
+	a-slide
+		h3 Headings
+		p Headings improve navigation and establish page hierarchy
+		ul
+			li(part='') Order should not increase by more than 1
+			li(part='') One H1 per view
+			li(part='') Don’t overuse - H1 to H4 is good
+			li(part='') Use headings to describe sections or groups of content
+			li(part='') Don’t put links/buttons in headings
+	a-slide
+		h3 Landmarks
+		p Landmarks can improve navigation and understanding of page 
+		table(part='')
+			thead
+				tr
+					th Role
+					th HTML Tag
+					th Usage
+					th Tips
+			tbody
+				tr
+					td banner
+					td header
+					td once per view
+					td Page header
+				tr
+					td main
+					td main
+					td once per view
+					td Main content area
+				tr
+					td search
+					td -
+					td multiple
+					td Search form
+				tr
+					td form
+					td -
+					td multiple
+					td If a form plays a significant role in page, call it out as a landmark
+				tr
+					td contentinfo
+					td footer
+					td once per view
+					td Page footer
+				tr
+					td navigation
+					td nav
+					td multiple
+					td Use with label/heading
+				tr
+					td complementary
+					td aside
+					td multiple
+					td Use with label/heading
+				tr
+					td application
+					td -
+					td avoid
+					td
+	a-slide
+		h3 Landmark Tips
+		p 
+		ul
+			li Use labels for generic landmarks (e.g. navigation, complementary)
+			li Some HTML5 sectioning elements are landmarks by default
+			li Use HTML5 element AND role
+			li Don’t overuse - depends on page complexity, though...
+		include code/landmark
+	a-slide
+		h3 Focus Management
+		p Managing where focus is and avoiding the loss of focus
+		ul
+			li modals
+			li view updates
+		p Tips:
+		ul
+			li Focusing on an element either reads the content or any label(if available)
+			li Use carefully - don’t move focus unless necessary
+			li Only natively focusable or tabindex
+			li.strong Use a script to manage focus
+
+	a-slide
+		h3 Focus Management
+		p Focus on anything w/access()
+		h4 How it works:
+		ul
+			li Dynamically adds tabindex, places focus and cleans up
+		include code/access
+	a-slide
+		h3 Announcing Content
+		h4 @aria-live creates "live region"
+		p Updates to live regions are automatically spoken by the screen reader
+		div(part='')
+			p Usage:
+			ul
+				li alerts
+				li errors
+				li notifications
+				li significant/pertinent updates
+	a-slide
+		h3 Announcing Content
+		div(part='')
+			h4 @aria-live pitfalls:
+			ul
+				li Multiple live regions cumbersome to manage
+				li adds complexity
+		div(part='')
+			h4 Best practices:
+			ul
+				li Avoid ad-hoc use of @aria-live
+				li Use script to speak content
+	a-slide
+		h3 Say Anything w/$.announce
+		h4 How it works:
+		ul
+			li Create common @aria-live “announcer” element
+			li Announcer needs to be in DOM on page load
+			li Reset technique allows repeat announcements
+		h4 Examples:
+			ul
+				li 
+					a(href="http://jsfiddle.net/pfox/ou11fr9p/") JSFiddle
+				li 
+					a(href="http://github.com/patrickfox/a11y_kit") a11y_kit
+	a-slide
+		h3 aria-labelledby, aria-describedby
+		ul
+			li(part='') 
+			li(part='') 
+			li(part='') 
+	a-slide
+		h2 Device-independent navigation - keyboard access
+		ul
+			li(part='') 
+			li(part='') 
+			li(part='') 
+	a-slide
+		h2 UI Isolation
+		ul
+			li(part='') In-page, multi-step process
+			li(part='') Modals
+			li(part='') 
+	a-slide
+		h2 Complex UI
+		ul
+			li(part='') What is overly complex for AT users is generally overly complex for everyone
+			li(part='') Don't try to do too much in one view
+			li(part='') Create consistency in the UI
+	a-slide
+		h2 RWD Considerations
+		ul
+			li(part='') Avoid overly complex UI changes
+			li(part='') Maintain flow from bp to bp as much as possible
+
+	a-slide(data-state="intro")
+		h2 Implementing a11y
+
+	a-slide(data-state="intro")
+		h2 Testing a11y
+
+//
+	- Color contrast
+	- Alternate equivalents
+		- Don't rely on color alone
+	- Content navigation - getting the lay of the land
+		- landmarks
+		- headings
+	- Speaking for the UI
+		- Live region and aria-live
+			- Ability to update and clear, and still have content spoken
+		- aria-labelledby, aria-describedby examples
+	- Focus management
+		- Why is it important
+		- Best practices, scenarios
+	- Device-independent navigation - keyboard access
+	- UI isolation
+		- In-page, multi-step process
+		- Modals
+	- Complex UI
+		- What is overly complex for AT users is generally overly complex for everyone
+		- Don't try to do too much in one view
+		- Create consistency in the UI
+	- Responsive considerations
+		- Avoid overly complex UI changes
+		- Maintain flow from bp to bp as much as possible
+
+
+
+
+
+	a-slide
+		h2 
+		ul
+			li(part='') 
+			li(part='') 
+			li(part='') 
+
+
+
+
+

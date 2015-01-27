@@ -1,0 +1,26 @@
+{
+  "name": "slide-deck",
+  "homepage": "https://github.com/philipwalton/slide-deck",
+  "authors": [
+    "Philip Walton <philip@philipwalton.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test"
+  ],
+  "dependencies": {
+    "polymer": "^0.5.1"
+  },
+  "_release": "e145a737aa",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "e145a737aac22f8c571c1253b189acb0e121f714"
+  },
+  "_source": "git://github.com/philipwalton/slide-deck.git",
+  "_target": "*",
+  "_originalSource": "philipwalton/slide-deck"
+}
