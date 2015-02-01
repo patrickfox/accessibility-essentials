@@ -1,6 +1,6 @@
 <h1>
 	<small>SXSW Interactive 2015</small>
-	<span>Modern Accessibility Workshop</span>
+	<p>Modern Accessibility Workshop</p>
 </h1>
 ====================================
 

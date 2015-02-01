@@ -2,13 +2,13 @@ doctype html(lang='en')
 head
 	meta(charset='utf-8')
 	title Modern Web A11y Workshop - SXSW Interactive 2015
-	script(src='../bower_components/webcomponentsjs/webcomponents.js')
-	link(rel='import', href='../bower_components/slide-deck/a-slide-deck.html')
-	link(rel='import', href='../bower_components/slide-deck/a-slide.html')
-	link(rel='import', href='../bower_components/slide-deck/code-block.html')
+	script(src='bower_components/webcomponentsjs/webcomponents.js')
+	link(rel='import', href='bower_components/slide-deck/a-slide-deck.html')
+	link(rel='import', href='bower_components/slide-deck/a-slide.html')
+	link(rel='import', href='bower_components/slide-deck/code-block.html')
 	link(rel='import', href='elements/flex-grid.html')
 	link(rel='import', href='elements/flex-line.html')
-	link(rel='stylesheet', href='theme.css')
+	link(rel='stylesheet', href='css/theme.css')
 body(is='a-slide-deck', unresolved='')
 	a-slide.start
 		h1 Modern Web A11y Workshop
@@ -22,22 +22,31 @@ body(is='a-slide-deck', unresolved='')
 		h2 Introduction
 	
 	a-slide
-		h3 Terminology
+		h3 What is this workshop about?
 		ul
-			li(part='') a11y = accessibility
-			li(part='') assistive technology = AT
-			li(part='') primary screen readers
+			li(part='') Modern accessibility challenges, solutions
+			li(part='') Design and technical considerations
+			li(part='') Not going to cover more foundational aspects
+	
+	a-slide
+		h3 Terminology
+		flex-line
+			div(flex='')
 				ul
-					li JAWS, NVDA, WindowEyes - Windows
-					li VoiceOver - MacOS, iOS
-					li TalkBack - Android
-			li(part='') WAI-ARIA
-			li(part='') WCAG2
-			li(part='') Rehabilitation Act, Section 508
-			li(part='') Americans w/Disabilities Act (ADA)
-			li(part='') Device-independence - works w/keyboard and mouse
-
-
+					li(part='') a11y = accessibility
+					li(part='') Assistive technology = AT
+					li(part='') Screen readers
+						ul
+							li JAWS, NVDA, WindowEyes - Windows
+							li VoiceOver - MacOS, iOS
+							li TalkBack - Android
+			div(flex='')
+				ul
+					li(part='') WAI-ARIA
+					li(part='') WCAG2
+					li(part='') Rehabilitation Act, Section 508
+					li(part='') Americans w/Disabilities Act (ADA)
+					li(part='') Device-independence - works w/keyboard and mouse
 	a-slide
 		h3 Accessibility is important
 		ul
@@ -48,10 +57,54 @@ body(is='a-slide-deck', unresolved='')
 					li accessible = machine-readable = voice control is the future...
 					li temporary disabilities, curb cuts, door openers
 	a-slide
-		h3 Standards compliance vs. true accessibility
+		h3 Compliance vs. true accessibility
 		ul
 			li(part='') "Standards compliant" is not good enough
 			li(part='') Make experiences user-friendly for people of all abilities
+
+	a-slide
+		h3 Screen Readers
+		ul
+			li(part='') Provide navigation tools
+				ul
+					li Element by element via virtual cursor
+					li Element types: headings, landmarks, etc.
+			li Speak document content
+				ul
+					li Focus speaks content
+			li Browser/Screen Reader Combinations
+				ul
+					li nothing works equally in all combos
+					li best combos: 
+
+
+
+	a-slide(data-state="intro")
+		h2 Design/Development Tips
+
+		//
+			- Create elegant, stable technical solutions
+			- Minimize use of ARIA
+			- Aim for widest screen reader/browser support possible
+			- Test often - waiting until the end of development is stupid
+			- Make accessibility easier, repeatable
+			- Build a11y into your process
+				- Ensure repeatability and consistency via libs
+				- Documentation
+				- Training
+			- Accessibility is a team effort
+				- Collaboration is key
+				- True a11y is found at the intersection of sound technical solutions and informed user experience design
+			- Share what you know
+				- Go forth and make great work, but share and make the community better
+				- File screen reader and browser bugs
+			- Be wary of "accessible" frameworks
+
+	a-slide(data-state="intro")
+		h2 Modern Web Challenges
+		p What makes modern UI so challenging to make accessible?
+
+
 	a-slide(data-state="intro")
 		h2 Tools and Techniques
 	a-slide
@@ -61,13 +114,7 @@ body(is='a-slide-deck', unresolved='')
 			li(part='') Generic is sometimes better
 			li(part='') Buttons vs. anchors vs. generic elements
 			li(part='') Some HTML5 sectioning elements spoken as landmarks
-			li(part='') More important: how is markup spoken?
-	a-slide 
-		h3 Content Navigation
-		ul
-			li(part='') How do people understand your content non-visually?
-			li(part='') Content hierarchy
-			li(part='') How do people navigate page content?
+			li(part='') Most important: how is markup spoken?
 	a-slide
 		h3 Headings
 		p Headings improve navigation and establish page hierarchy
@@ -132,11 +179,21 @@ body(is='a-slide-deck', unresolved='')
 		h3 Landmark Tips
 		p 
 		ul
-			li Use labels for generic landmarks (e.g. navigation, complementary)
-			li Some HTML5 sectioning elements are landmarks by default
-			li Use HTML5 element AND role
-			li Don’t overuse - depends on page complexity, though...
-		include code/landmark
+			li(part='') Create a landmark strategy, use it consistently
+			li(part='') Use labels for generic landmarks (e.g. navigation, complementary)
+			li(part='') Some HTML5 sectioning elements are landmarks by default
+			li(part='') Use HTML5 element <em>and</em> role
+			li(part='') Don’t overuse - depends on page complexity, though...
+		code-block(language="html")
+			| 
+			|		<section role="complementary" aria-labelledby="module_heading">
+			|			<h2 id="module_heading">Frequently Asked Questions</h2>
+			|		</section>
+			| 
+			|		<header role="banner"></header>
+			| 
+			|		<footer role="contentinfo"></footer>
+			| 
 	a-slide
 		h3 Focus Management
 		p Managing where focus is and avoiding the loss of focus
@@ -149,124 +206,185 @@ body(is='a-slide-deck', unresolved='')
 			li Use carefully - don’t move focus unless necessary
 			li Only natively focusable or tabindex
 			li.strong Use a script to manage focus
-
 	a-slide
 		h3 Focus Management
 		p Focus on anything w/access()
 		h4 How it works:
 		ul
-			li Dynamically adds tabindex, places focus and cleans up
-		include code/access
+			li Temporarily adds tabindex, places focus and cleans up
+		h4 Usage:
+		ul
+			li Focused item is no longer available
+			li Unprompted modal
+
 	a-slide
 		h3 Announcing Content
-		h4 @aria-live creates "live region"
-		p Updates to live regions are automatically spoken by the screen reader
-		div(part='')
-			p Usage:
-			ul
-				li alerts
-				li errors
-				li notifications
-				li significant/pertinent updates
+		p Live regions automatically speak content updates
+		h4 Use cases:
+		ul
+			li alerts
+			li errors
+			li notifications
+			li any pertinent update
 	a-slide
 		h3 Announcing Content
+		p Live regions automatically speak content updates
+		h4 Implementation:
+		code-block(language="html")
+			| 
+			| 		# aria-live={polite || assertive}
+			|		<section aria-live="polite">...</section>
+			| 
+			| 		# log is shorthand for aria-live="polite"
+			|		<section role="log">...</section>
+			| 
+			| 		# alert is shorthand for aria-live="assertive"
+			|		<section role="alert"></section>
+			| 
+			| 		# status is shorthand for aria-live="polite"
+			|		<section role="status"></section>
+			| 
+		a(href="http://jsfiddle.net/pfox/ou11fr9p/show/light", target="_blank") aria-live example
+	a-slide(data-state="lotr")
+		h3 One Live Region To Rule Them All
 		div(part='')
-			h4 @aria-live pitfalls:
+			h4 Live region pitfalls:
 			ul
 				li Multiple live regions cumbersome to manage
-				li adds complexity
+				li Live region roles(status, alert, log) don't work reliably
+				li Ad-hoc @aria-live use adds complexity, risk
 		div(part='')
 			h4 Best practices:
 			ul
-				li Avoid ad-hoc use of @aria-live
-				li Use script to speak content
+				li Use only ONE @aria-live in each page
+				li Use a script to speak content
 	a-slide
 		h3 Say Anything w/$.announce
 		h4 How it works:
 		ul
 			li Create common @aria-live “announcer” element
-			li Announcer needs to be in DOM on page load
+			li Announcer needs to be in DOM on page load and left alone
 			li Reset technique allows repeat announcements
-		h4 Examples:
-			ul
-				li 
-					a(href="http://jsfiddle.net/pfox/ou11fr9p/") JSFiddle
-				li 
-					a(href="http://github.com/patrickfox/a11y_kit") a11y_kit
+		a(href="http://bit.ly/a11y_kit", target="_blank") a11y_kit repo
 	a-slide
-		h3 aria-labelledby, aria-describedby
+		h3 Alternate Copy and Labeling
+		p Additional/alternate copy used to improve accessibility
+
+		h4 Examples: button/link copy, form errors, visual translations
+		h4 Implementation:
 		ul
-			li(part='') 
-			li(part='') 
-			li(part='') 
+			li(part='') aria-label=“{label text}” - overrides content
+			li(part='') aria-labelledby=“{1 or more container id’s}” - label an element using any copy in the view
+			li(part='') aria-describedby=“{1 or more container id’s}” - additional descriptive content
+			li(part='') title behavior is not as consistent
 	a-slide
-		h2 Device-independent navigation - keyboard access
-		ul
-			li(part='') 
-			li(part='') 
-			li(part='') 
-	a-slide
-		h2 UI Isolation
+		h3 UI Isolation
+		p Temporarily isolate user action/focus to specified area of UI
+		h4 Visual cues
 		ul
 			li(part='') In-page, multi-step process
 			li(part='') Modals
-			li(part='') 
 	a-slide
-		h2 Complex UI
+		h3 Complex UI
 		ul
-			li(part='') What is overly complex for AT users is generally overly complex for everyone
+			li(part='') What is overly complex for AT users is overly complex for everyone
 			li(part='') Don't try to do too much in one view
-			li(part='') Create consistency in the UI
+			li(part='') Provide extra help where needed
 	a-slide
-		h2 RWD Considerations
+		h3 RWD Considerations
 		ul
 			li(part='') Avoid overly complex UI changes
 			li(part='') Maintain flow from bp to bp as much as possible
+			li(part='') Manage state and functionality changes w/JS - e.g. link menus that move to collapsed state at mobile view
+			li(part='') Test each break point...
+		div(part='') 
+			h4 Example:
+			a(href="") Hamburger menu
+
 
 	a-slide(data-state="intro")
-		h2 Implementing a11y
+		h2 Implementing A11y
+	a-slide
+		h3 Single Page Architecture
+		p No page refresh - users have no indication of context changes
+		p Solution: $.announce "view loading/loaded" status
+		ul
+			li(part='') Update page title from view to view
+			li(part='') Use $.announce to speak "{new title} view loaded"
+		a(href="http://moderna11y.com/" target="_blank") Example: moderna11y.com
+	a-slide
+		h3 Popup menus
+		p Emulate native select menu states, behaviors and keyboard navigation
+		flex-line
+			div(flex='')
+				h4 Button:
+				ul
+					li aria-haspopup=true
+					li aria-controls={id of menu}
+					li aria-expanded={true|false}
+			div(flex='') 
+				h4 Menu:
+				ul
+					li keyboard navigation: up/down/tab moves through menu options
+					li ESC closes menu, place focus back on button; use role=“menuitem” on items in menu
+	a-slide
+		h3 Accordions
+			a-slide
+				h3 Modals
+				flex-line
+					div(flex='')
+						h4 
+						ul
+							li 
+					div(flex='')
+						h4 
+						ul
+							li 
+	a-slide
+		h3 Tooltips
+		ul
+			li
+	a-slide
+		h3 Inline Form Validation
+		p Inline, dynamic errors are roblematic
+		div(part='')
+			h4 Tips:
+			ul
+				li Leverage field label to report error messaging
+				li Use $.announce to speak errors
+				li Use ARIA to communicate states:
+					ul
+						li @aria-invalid, @aria-required
+
+
+			h4 Examples:
+			a(href="" target="_blank") {Link to form validation demo}
+	a-slide
+		h3 
+
 
 	a-slide(data-state="intro")
 		h2 Testing a11y
 
-//
-	- Color contrast
-	- Alternate equivalents
-		- Don't rely on color alone
-	- Content navigation - getting the lay of the land
-		- landmarks
-		- headings
-	- Speaking for the UI
-		- Live region and aria-live
-			- Ability to update and clear, and still have content spoken
-		- aria-labelledby, aria-describedby examples
-	- Focus management
-		- Why is it important
-		- Best practices, scenarios
-	- Device-independent navigation - keyboard access
-	- UI isolation
-		- In-page, multi-step process
-		- Modals
-	- Complex UI
-		- What is overly complex for AT users is generally overly complex for everyone
-		- Don't try to do too much in one view
-		- Create consistency in the UI
-	- Responsive considerations
-		- Avoid overly complex UI changes
-		- Maintain flow from bp to bp as much as possible
-
-
-
-
-
+	a-slide(data-state="intro")
+		h2 A11y Resources
 	a-slide
-		h2 
+		h3 
+		
+	a-slide(data-state="intro")
+		h2 Summary
+
 		ul
-			li(part='') 
-			li(part='') 
-			li(part='') 
+			li Check out a11y_kit - $.announce and $.access your modern UI
+			li
+			li
+			li
+			li
 
 
+	footer(role="contentinfo")
+		span 
+			a(href="/") Home
 
 
 

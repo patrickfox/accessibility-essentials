@@ -23,6 +23,8 @@ h6 {
 }
 
 h1 {
+  font-family: 'Maven Pro';
+  font-weight:600;
   font-size: 3.5em;
   margin: 0 0 calc(1em / 3.5);
 }
@@ -33,7 +35,7 @@ h2 {
 }
 
 h3 {
-  font-size: 1.75em;
+  font-size: 2em;
   font-weight: 500;
   margin: 0 0 calc(1em / 1.75);
 }
@@ -98,16 +100,47 @@ body[data-state='intro'] {
   background-color:#333;
 }
 
+body[data-state='lotr'] {
+  color:#fff;
+  background: #333 url(../img/lotr.jpg) no-repeat cover;
+}
+
 h2, h3 {
-  transform: translateY(-20px);
+  font-family: 'Maven Pro';
+  font-weight:300;
   opacity: 0;
-  -webkit-transition: transform .5s, opacity .5s;
+  -webkit-transition: transform .5s, opacity .5s, text-shadow 2s;
+}
+
+h2 {
+  transform: translateY(-20px);
   transition-delay: .5s;
 }
 
+h3 {
+  transform: translateX(100px);
+  transition-delay: .4s;
+}
+
+
+a-slide[history="present"][data-state="intro"] h2 {
+  text-shadow: 0 0 10px #fff;
+}
+
+a-slide[history="present"] h3 {
+  text-shadow: 0 0 10px rgba(0,0,0,.3);
+}
+
 a-slide[history="present"] h2, a-slide[history="present"] h3 {
-  transform: translateY(0);
   opacity: 1;
+}
+
+a-slide[history="present"] h2 {
+  transform: translateY(0);
+}
+
+a-slide[history="present"] h3 {
+  transform: translateX(0);
 }
 
 .strike {
@@ -139,3 +172,54 @@ tbody tr:nth-of-type(2n+0) {
 thead tr {
   background-color: #ccc;
 }
+
+footer[role="contentinfo"] {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color:#333;
+}
+
+
+@font-face {
+    font-family: 'Maven Pro';
+    src: url("../fonts/maven_pro_bold-webfont.woff") format("woff");
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Maven Pro';
+    src: url("../fonts/maven_pro_medium-webfont.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Maven Pro';
+    src: url("../fonts/maven_pro_black-webfont.woff") format("woff");
+    font-weight: bolder;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Maven Pro';
+    src: url("../fonts/maven_pro_book-webfont.woff") format("woff");
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Maven Pro';
+    src: url("../fonts/maven_pro_light-webfont.woff") format("woff");
+    font-weight: 200;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Maven Pro';
+    src: url("../fonts/maven_pro_ultralight-webfont.woff") format("woff");
+    font-weight: 100;
+    font-style: normal;
+}
+
