@@ -100,9 +100,28 @@ body[data-state='intro'] {
   background-color:#333;
 }
 
-body[data-state='lotr'] {
+body[data-state="lotr"] {
   color:#fff;
-  background: #333 url(../img/lotr.jpg) no-repeat cover;
+  background: #333 url(../img/lotr.jpg) no-repeat;
+}
+
+body[data-state='highlight-landmarks'] .landmarks tr td {
+  background-color: #999;
+}
+
+body[data-state='highlight-landmarks'] .landmarks .hl td {
+  background-color: #a9ffb1;
+}
+
+body[data-state="access"] {
+  color:#fff;
+  background: #333 url(../img/superman.jpg) no-repeat;
+  background-size: cover;
+}
+
+body[data-state="map"] {
+  background: #fff url(../img/map.png) no-repeat;
+  background-size: cover;
 }
 
 h2, h3 {
@@ -120,6 +139,14 @@ h2 {
 h3 {
   transform: translateX(100px);
   transition-delay: .4s;
+}
+
+h4 {
+  margin-top:0;
+}
+
+ul ul {
+  margin:.6em 0 0 0;
 }
 
 
@@ -149,6 +176,7 @@ a-slide[history="present"] h3 {
 
 code {
   font-size: .7em;
+  font-family: Courier, monospace;
 }
 
 table {
@@ -156,6 +184,7 @@ table {
   margin:0;
   border-spacing: none;
   border-collapse: collapse;
+  background-color:#fff;
 }
 td, th {
   font-size: 1.4em;
@@ -172,12 +201,26 @@ tbody tr:nth-of-type(2n+0) {
 thead tr {
   background-color: #ccc;
 }
+tbody tr:hover {
+  background-color: #3d78ff;
+  color: #fff;
+}
 
 footer[role="contentinfo"] {
   position: absolute;
   bottom: 0;
   width: 100%;
   background-color:#333;
+}
+
+.start p a {
+  display: block;
+}
+
+.jsmvc {
+  background: url('../img/jsmvc.png') no-repeat top right;
+  padding: 0 327px 0 0;
+  display: inline-block;
 }
 
 
