@@ -10,6 +10,7 @@ head
 	link(rel='import', href='elements/flex-line.html')
 	link(rel='stylesheet', href='css/theme.css')
 body(is='a-slide-deck', unresolved='')
+	div
 	a-slide.start
 		h1 Modern Web A11y Workshop
 		h3(style='margin-top:-.4em; font-weight:400') SXSW Interactive 2015
@@ -26,14 +27,8 @@ body(is='a-slide-deck', unresolved='')
 		ul
 			li(part='') Modern accessibility challenges, solutions
 			li(part='') Design and technical considerations
-			li(part='') My perspective:
-				ul
-					li Web UI should be engaging and efficient for people of all abilities
-					li Technical solutions should be elegant, robust
-					li Code should be lean
-					li Repeatability and consistency are key
-					li Improve the way we talk about modern a11y
-					li A11y must be a core part of every step of the process
+			li(part='') Improving the way we talk about modern a11y
+			li(part='') Creating engaging and efficient web UX for people of all abilities
 
 	a-slide
 		h3 Terminology
@@ -52,12 +47,14 @@ body(is='a-slide-deck', unresolved='')
 	a-slide
 		h3 A11y is important
 		ul
-			li(part='') Companies: Legal and brand risks
-			li(part='') People w/disabilities: Independence, dignity
-			li(part='') A11y benefits everyone:
+			li(part='') #[strong Companies:] Legal and brand risks
+			li(part='') #[strong People w/disabilities:] Independence, dignity
+			li(part='') #[strong A11y is an equality issue]
+			li(part='') #[strong A11y benefits everyone:]
 				ul
-					li temporary disabilities, curb cuts, door openers
-					li accessible web = machine-readable web = voice control is the future...
+					li temporary disabilities
+					li curb cuts, door openers
+					li accessible web = machine-readable web
 	a-slide
 		h3 Compliance vs. Usability
 		ul
@@ -99,17 +96,15 @@ body(is='a-slide-deck', unresolved='')
 			div(flex='', part='')
 				h4 Desktop
 				ul
-					li JAWS ~50%, mostly in US
-					li NVDA ~20%, higher in EU
-					li VoiceOver ~10%
+					li JAWS(Win) ~50%, mostly in US
+					li NVDA(Win) ~20%, higher in EU
+					li VoiceOver(MacOS) ~10%
 			div(flex='', part='')
 				h4 Mobile
 				ul
-					li JAWS
-					li NVDA
-					li VoiceOver
-					li Talkback
-
+					li VoiceOver(iOS) ~60%, higher in US
+					li Talkback(Android) ~20%
+		p(part) Source: #[a(href="http://webaim.org/projects/screenreadersurvey5/", target="webaim") WebAIM.org Screen Reader Survey 5]
 	a-slide
 		h3 Modern Web Challenges
 		h4 What makes accessible, modern web UI so challenging?
@@ -118,32 +113,28 @@ body(is='a-slide-deck', unresolved='')
 				ul
 					li(part='') Dynamic UI: content updates, state changes not communicated
 					li(part='') Custom UI: role and purpose of non-native widgets
-			li(part='') ARIA attributes help bridge this gap
-
+					li(part='') ARIA helps bridge this gap
+						ul
+							li Live regions: #[code aria-live]
+							li States: #[code aria-enabled], #[code aria-selected] 
+							li Roles: #[code role="dialog"] 
 	a-slide
-		h3 Design/Development Tips
+		h3 Modern A11y Goals and Tips
 		flex-line
 			div(flex='')
 				ul
-					li(part='') Create elegant, stable technical solutions
+					li(part='') Create lean, elegant, robust technical solutions
 					li(part='') Minimize use of ARIA - rely on semantic code
 					li(part='') Aim for widest screen reader/browser support possible
 					li(part='') Test often - don't wait until the end
 					li(part='') Developers and QA peeps should be screen reader experts
-						//
-							Ensure repeatability and consistency via libs
-							Documentation
-							Training
 			div(flex='')
 				ul
 					li(part='') Make accessibility easier, repeatable
-					li(part='') Build a11y into your process
+					li(part='') Make a11y a core part of every step of project lifecycle
 					li(part='') Accessibility is a team effort
-					//
-						Collaboration is key
-						True a11y is found at the intersection of sound technical solutions and informed user experience design
-					li(part='') Be wary of "accessible" frameworks - test for yourself, BYO
-					li(part='') Mimic native behaviors
+					li(part='') Be wary of "accessible" frameworks - test for yourself, improve
+					li(part='') Give back - share what you know, report issues
 
 
 	a-slide(data-state="intro")
@@ -158,23 +149,31 @@ body(is='a-slide-deck', unresolved='')
 			li(part='') Focusing on an element reads its contents or label
 			li(part='') Use carefully - don't move focus unless necessary
 			li(part='') Only natively focusable or tabindexed elements can receive focus
-			li(part='') Hard coding tabindex can be problematic --&gt; do not hard code tabindex
+			li(part='') Hard coding tabindex can be problematic → #[strong do not hard code tabindex]
 			li.strong(part='') Use a script to dynamically manage focus&hellip;
 
 	a-slide(data-state="#access")
-		h3 Focus on anything w/$.access()
+		h3 Focus on anything w/ $.access()
 		h4 
 		div(part="")
 			h4 How it works:
 			ul
 				li Adds #[code tabindex="-1"], places focus and cleans up on #[code focusout]
+
+			code-block(language='javascript')
+				| 
+				| 	$("#home_section").access(); //→ places focus on the element
+
+				| 
+				| 	$("#home_section").access(true); //→ places focus before the element
+				| 
 		div(part="")
 			h4 Example Usage:
 			ul
 				li Focused item is no longer available
 				li Modals
 				li SPA view updates
-			a(href='http://jsfiddle.net/pfox/bLkvuhap/show/light/', target="access") $.access() in action -&gt;
+			a(href='http://jsfiddle.net/pfox/bLkvuhap/show/light/', target="access") $.access() in action →
 
 	a-slide
 		h3 Announcing Content
@@ -184,7 +183,7 @@ body(is='a-slide-deck', unresolved='')
 			li alerts
 			li errors
 			li notifications
-			li any pertinent update	a-slide
+			li any pertinent update
 	a-slide
 		h3 Announcing Content
 		h4 Implementation:
@@ -208,7 +207,7 @@ body(is='a-slide-deck', unresolved='')
 			h4 Live region pitfalls:
 			ul
 				li Multiple live regions cumbersome to manage
-				li Live region roles(status, alert, log) don't work reliably
+				li Live region roles(status, alert, log, timer) don't work reliably
 				li Ad-hoc live region use adds complexity, risk
 		div(part='')
 			h4 Best practices:
@@ -222,9 +221,9 @@ body(is='a-slide-deck', unresolved='')
 			li Create common @aria-live “announcer” element
 			li Announcer needs to be in DOM on page load and left alone
 			li Reset technique allows repeat announcements
-		a(href="http://jsfiddle.net/pfox/ou11fr9p/show", target="_blank") Live Region Example -&gt;
+		a(href="http://jsfiddle.net/pfox/ou11fr9p/show", target="_blank") Live Region Example →
 		br
-		a(href="http://bit.ly/a11y_kit", target="_blank") Accessibility Kit Library -&gt;
+		a(href="http://bit.ly/a11y_kit", target="_blank") Accessibility Kit Library →
 
 	a-slide
 		h3 UI Isolation
@@ -236,30 +235,33 @@ body(is='a-slide-deck', unresolved='')
 	a-slide
 		h3 Complex UI
 		ul
-			li(part='') What is overly complex for AT users is overly complex for everyone
+			li(part='') Overly complex for AT users === overly complex for everyone
 			li(part='') Don't try to do too much in one view
 			li(part='') Provide extra help where needed
 	a-slide
 		h3 Alternate Copy and Labeling
 		h4 Additional copy used to improve accessibility
-		p #[strong Examples:] button/link copy, form errors, visual translations
-		p Labeled elements are interactive
-		p Minimize use of alternate content
-		p Space contraints or visual context may allow for shorter visible text
 
-
-		h4 Uses:
-		ul 
-			li Summarizing complex copy
-
+		flex-line
+			div(part='', flex='')
+				h4 Uses:
+				ul 
+					li Summarizing complex copy
+					li Translating visual cues to spoken cues
+					li Providing additional content to improve meaning
+			div(part='', flex='')
+				h4 Tips:
+				ul
+					li Labeled elements are usually interactive
+					li Minimize use of alternate content
 	a-slide
 		h3 Alternate Copy and Labeling
 		h4 Techniques:
 		ul
-			li #[code aria-label] -
-			li #[code aria-labelledby] -
-			li #[code aria-describedby] -
-			li #[code .visuallyhidden] CSS technique - 
+			li #[code aria-label] - works well on buttons
+			li #[code aria-labelledby] - associate existing content to an element
+			li #[code aria-describedby] - additional descriptive content
+			li #[code .visuallyhidden] CSS technique - can be problematic on iOS
 			li #[code title] - not reliable, don't use!
 	a-slide
 		h3 Alternate Copy and Labeling
@@ -270,12 +272,10 @@ body(is='a-slide-deck', unresolved='')
 			|          #label an element using another element's copy
 			|		&lt;div aria-labelledby="some_id another_id third_id"> 
 			|          #additional descriptive content
-			|		&lt;input aria-describedby="visual_descriptive_text" type="text" /> 
-			| 
-			| 
+			|		&lt;input id="first_name" aria-describedby="visual_descriptive_text" type="text" /> 
 			| 
 
-		a(href='') aria-labelledby example -&gt;
+		a(href='') aria-labelledby example →
 
 	a-slide
 		h3 Responsive Design Considerations
@@ -283,7 +283,7 @@ body(is='a-slide-deck', unresolved='')
 		ul
 			li(part='') Avoid overly complex UI changes
 			li(part='') Touch gestures require accessible equivalent
-			li(part='') Manage state and functionality changes w/JS - #[a(href='', target='hamburger') Hamburger Menu -&gt;]
+			li(part='') Manage state and functionality changes w/JS - #[a(href='', target='hamburger') Hamburger Menu →]
 			li(part='') Minimize swipes on mobile - simplify and use semantic markup
 			li(part='') #[code aria-hidden="false"] breaks iOS VO
 			li(part='') Test each break point&hellip;
@@ -299,7 +299,7 @@ body(is='a-slide-deck', unresolved='')
 				ul
 					li Icon fonts rely on Unicode character mapping
 					li MacOS VO used to read some Unicode characters as an audible beep
-					li #[a(href='https://vimeo.com/120737667', target='_blank') Some Unicode characters map to emoji -&gt;]
+					li #[a(href='https://vimeo.com/120737667', target='_blank') Some Unicode characters map to emoji →]
 	a-slide
 		h3 CSS Pseudo Elements
 		h4 Implementation:
@@ -308,9 +308,9 @@ body(is='a-slide-deck', unresolved='')
 			|          #works but with audible "beep" and "alien" sign in VO
 			| 		<a href="..." class="icon external" target="_blank">External link</a>
 			| 
-			|          #better - use a span(aria-hidden=true)
+			|          #better - use a span(aria-hidden=true) to hide from screen readers
 			| 		<a href="..." class="icon external" target="_blank">
-			|			<span aria-hidden="true"></span>
+			|			**<span aria-hidden="true"></span>**
 			|                   External link
 			|		</a>
 			| 
@@ -331,10 +331,11 @@ body(is='a-slide-deck', unresolved='')
 		ul
 			li(part='') Generic tags are sometimes better, less verbose
 			li(part='') Most important: How is markup spoken?
+			li(part='') Test options, use what sounds best
 			li(part='') Examples:
 				ul
 					li(part='') HTML5 sectioning elements spoken as landmarks
-					li(part='') Buttons and anchors vs. generic elements
+					li(part='') Use buttons &amp; anchors vs. generic elements
 					li(part='') UL/LI for true list content ONLY
 					li(part='') DL/DD/DT are overly verbose
 	a-slide
@@ -435,9 +436,11 @@ body(is='a-slide-deck', unresolved='')
 		div(part='')
 			ul
 				li Update page title from view to view
-				li $.announce() "{new title} view loaded"
+				li $.announce() "{new title} view loaded" on view loaded event
 				li $.access() new content
-			a(href="http://patrickfox.github.io/" target="_blank") Accessible Single-Page App -&gt;
+			a(href="http://patrickfox.github.io/" target="_blank") Accessible Single-Page App →
+			br
+			a(href="http://patrickfox.github.io/blog/screen-reader-page-load-behaviors.html" target="_blank") Screen reader page load behaviors →
 	a-slide
 		h3 Popup menus
 		h4 Emulate native select menu states, behaviors and keyboard nav
@@ -453,20 +456,20 @@ body(is='a-slide-deck', unresolved='')
 				ul
 					li keyboard navigation: up/down/tab moves through menu options
 					li ESC closes menu, place focus back on button; use #[code role=“menuitem”] on items in menu
-		a(href="http://patrickfox.github.io/blog/accessible-popup-menus.html" target="_blank") Popup Menu Example -&gt;
-	a-slide
-		h3 Accordion Content - TODO
-		flex-line
-			div(flex='')
-				h4 Button:
-				ul
-					li aria-haspopup=true
-					li aria-controls={id of menu}
-					li aria-expanded={true|false}
-			div(flex='') 
-				h4 Container:
-				ul
-					li when collapsed, must be display:none to completely hide contents	a-slide
+		a(href="http://patrickfox.github.io/blog/accessible-popup-menus.html" target="_blank") Popup Menu Example →
+	//- a-slide
+	//- 	h3 Accordion Content - TODO
+	//- 	flex-line
+	//- 		div(flex='')
+	//- 			h4 Button:
+	//- 			ul
+	//- 				li aria-haspopup=true
+	//- 				li aria-controls={id of menu}
+	//- 				li aria-expanded={true|false}
+	//- 		div(flex='') 
+	//- 			h4 Container:
+	//- 			ul
+	//- 				li when collapsed, must be display:none to completely hide contents	a-slide
 	a-slide
 		h3 Dynamic Messages
 		h4 Inline messages provide confirmation, informational or alert messaging
@@ -508,7 +511,7 @@ body(is='a-slide-deck', unresolved='')
 			h4 On close:
 			ul
 				li return focus to button, last focused or main content
-			a(href='http://patrickfox.github.io/#/blog/accessible-modals', target='modal_example') Modal example -&gt;
+			a(href='http://patrickfox.github.io/#/blog/accessible-modals', target='modal_example') Modal example →
 	a-slide
 		h3 Modals
 		h4 UI Isolation Detail
@@ -516,9 +519,9 @@ body(is='a-slide-deck', unresolved='')
 			| 
 			| 		&lt;body>
 			|		    <div data-isolate class="shell" aria-hidden="true">
-			|              #all page content lives here
+			|              #all main page content lives here
 			|			</div>
-			|              #modals live at body end
+			|              #modals live at body end, hidden until activated
 			|		    <section data-modal-id="test_modal" role="dialog">...</section>
 			|		&lt;/body>
 			| 
@@ -549,42 +552,66 @@ body(is='a-slide-deck', unresolved='')
 		ul
 			li on button focus/blur, tooltip opens/closes
 			li tooltip contents are read upon button interaction
-		a(href="" target="_blank") Tooltip demo -&gt;
-	a-slide
-		h3 Inline Form Validation
-		p Inline, dynamic errors are problematic
-		div(part='')
-			h4 Tips:
-			ul
-				li Leverage field label to report error messaging
-				li Use $.announce to speak errors
-				li Use ARIA to communicate states:
-					ul
-						li @aria-invalid, @aria-required
+		a(href="" target="_blank") Tooltip demo →
+	//- a-slide
+	//- 	h3 Inline Form Validation
+	//- 	p Inline, dynamic errors are problematic
+	//- 	div(part='')
+	//- 		h4 Tips:
+	//- 		ul
+	//- 			li Leverage field label to report error messaging
+	//- 			li Use $.announce to speak errors
+	//- 			li Use ARIA to communicate states:
+	//- 				ul
+	//- 					li @aria-invalid, @aria-required
 
-			a(href="" target="_blank") Form validation demo -&gt;
-	a-slide
-		h3 
+	//- 		a(href="" target="_blank") Form validation demo -&gt;
+	//- a-slide
+	//- 	h3 
 
 
 	a-slide(data-state="intro")
-		h2 Testing a11y
+		h2 Deep Dive: Responsive Menus
+	
+	//
+		good
+		needs work
+		menu improvements
+
+
 	a-slide
-		h3 Testing Tips
+		h3 Starbucks.com
+		h4 Overall, site is pretty solid
 		ul
-			li(part='') Test early, test often
-			li(part='') Devs and testers should be *expert* screen reader users
-			li(part='') Use VM’s, devices, and mobile emulators
-			li(part='') Automate testing where possible
-			li(part='') Use testing tools to cover basics(e.g. FireEyes), beware false positives
+			li Responsive
+			li Accessible
+			li A couple of things though...
+
 	a-slide
-		h3 Testing Tools
+		h3 Starbucks.com
+		div(part='')
+			h4 Problem: hard coded tabindex causes issues
+			ul
+				li 6 #[code tabindex="0"] on main content areas
+				li 4 #[code tabindex="-1"] on other areas
+		div(part='')
+			h4 Solution: use $.access() !
+
+	a-slide
+		h3 Starbucks.com
+		h4 Problem: Hidden menu items still navigable
 		ul
-			li(part='') FireEyes
-			li(part='') Tenon
-			li(part='') 
-			li(part='') Automate testing where possible
-			li(part='') Use testing tools to cover basics(e.g. FireEyes), beware false positives
+			li CSS transitions used to animate menu open/close
+			li #[code aria-hidden] is problematic in VoiceOver
+			li #[code display:none;] should be used to hide menus when closed
+			li Timing is key: hide menus #[em after] CSS transition ends
+
+	a-slide
+		h3 Starbucks.com
+		h4 Solution: Use #[code transitionend] event on menu close
+		ul
+			li Event fires on end of CSS transition
+			li Set menu display #[code display:none;]
 
 	a-slide(data-state="intro")
 		h2 Resources
@@ -594,16 +621,27 @@ body(is='a-slide-deck', unresolved='')
 			li(part='') JAWS Help: #[a(href='http://bit.ly/JAWS_Keystrokes', target='at_help') bit.ly/JAWS_Keystrokes]
 			li(part='') NVDA Help: #[a(href='http://bit.ly/NVDA_Help', target='at_help') bit.ly/NVDA_Help]
 			li(part='') VoiceOver Help: #[a(href='http://bit.ly/VO_Help', target='at_help') bit.ly/VO_Help]
-		
+	a-slide
+		h3 Testing Tools
+		h4 Automate testing where possible
+		ul
+			li FireEyes
+			li Tenon.io
 	a-slide(data-state="intro")
 		h2 Summary
 
+	a-slide
+		h3 Cheat Sheet
 		ul
-			li $.announce and $.access your modern UI w/a11y_kit - bit.ly/a11y_kit
-			li Examples - moderna11y.com
+			li 
+			li $.announce() and $.access() your modern UI w/a11y_kit - bit.ly/a11y_kit
+				ul
+					li Don't hard code #[code tabindex] - use $.access()
+					li One live region(aria-live) per view - use $.announce()
+			li Use #[code aria-labelledby] to summarize complex content
 			li
 			li
-			li
+			li Share what you learn!
 	a-slide(data-state="intro")
 		h2 Questions, Comments?
 	a-slide(data-state="intro")

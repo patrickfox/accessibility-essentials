@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="css/theme.css"/>
 </head>
 <body is="a-slide-deck" unresolved="">
+  <div></div>
   <a-slide class="start">
     <h1>Modern Web A11y Workshop</h1>
     <h3 style="margin-top:-.4em; font-weight:400">SXSW Interactive 2015</h3>
@@ -24,16 +25,8 @@
     <ul>
       <li part="">Modern accessibility challenges, solutions</li>
       <li part="">Design and technical considerations</li>
-      <li part="">My perspective:
-        <ul>
-          <li>Web UI should be engaging and efficient for people of all abilities</li>
-          <li>Technical solutions should be elegant, robust</li>
-          <li>Code should be lean</li>
-          <li>Repeatability and consistency are key</li>
-          <li>Improve the way we talk about modern a11y</li>
-          <li>A11y must be a core part of every step of the process</li>
-        </ul>
-      </li>
+      <li part="">Improving the way we talk about modern a11y</li>
+      <li part="">Creating engaging and efficient web UX for people of all abilities</li>
     </ul>
   </a-slide>
   <a-slide>
@@ -59,12 +52,14 @@
   <a-slide>
     <h3>A11y is important</h3>
     <ul>
-      <li part="">Companies: Legal and brand risks</li>
-      <li part="">People w/disabilities: Independence, dignity</li>
-      <li part="">A11y benefits everyone:
+      <li part=""><strong>Companies:</strong> Legal and brand risks</li>
+      <li part=""><strong>People w/disabilities:</strong> Independence, dignity</li>
+      <li part=""><strong>A11y is an equality issue</strong></li>
+      <li part=""><strong>A11y benefits everyone:</strong>
         <ul>
-          <li>temporary disabilities, curb cuts, door openers</li>
-          <li>accessible web = machine-readable web = voice control is the future...</li>
+          <li>temporary disabilities</li>
+          <li>curb cuts, door openers</li>
+          <li>accessible web = machine-readable web</li>
         </ul>
       </li>
     </ul>
@@ -123,21 +118,20 @@
       <div flex="" part="">
         <h4>Desktop</h4>
         <ul>
-          <li>JAWS ~50%, mostly in US</li>
-          <li>NVDA ~20%, higher in EU</li>
-          <li>VoiceOver ~10%</li>
+          <li>JAWS(Win) ~50%, mostly in US</li>
+          <li>NVDA(Win) ~20%, higher in EU</li>
+          <li>VoiceOver(MacOS) ~10%</li>
         </ul>
       </div>
       <div flex="" part="">
         <h4>Mobile</h4>
         <ul>
-          <li>JAWS</li>
-          <li>NVDA</li>
-          <li>VoiceOver</li>
-          <li>Talkback</li>
+          <li>VoiceOver(iOS) ~60%, higher in US</li>
+          <li>Talkback(Android) ~20%</li>
         </ul>
       </div>
     </flex-line>
+    <p part="part">Source: <a href="http://webaim.org/projects/screenreadersurvey5/" target="webaim">WebAIM.org Screen Reader Survey 5</a></p>
   </a-slide>
   <a-slide>
     <h3>Modern Web Challenges</h3>
@@ -147,40 +141,36 @@
         <ul>
           <li part="">Dynamic UI: content updates, state changes not communicated</li>
           <li part="">Custom UI: role and purpose of non-native widgets</li>
+          <li part="">ARIA helps bridge this gap
+            <ul>
+              <li>Live regions: <code>aria-live</code></li>
+              <li>States: <code>aria-enabled</code>, <code>aria-selected</code> </li>
+              <li>Roles: <code>role="dialog"</code> </li>
+            </ul>
+          </li>
         </ul>
       </li>
-      <li part="">ARIA attributes help bridge this gap</li>
     </ul>
   </a-slide>
   <a-slide>
-    <h3>Design/Development Tips</h3>
+    <h3>Modern A11y Goals and Tips</h3>
     <flex-line>
       <div flex="">
         <ul>
-          <li part="">Create elegant, stable technical solutions</li>
+          <li part="">Create lean, elegant, robust technical solutions</li>
           <li part="">Minimize use of ARIA - rely on semantic code</li>
           <li part="">Aim for widest screen reader/browser support possible</li>
           <li part="">Test often - don't wait until the end</li>
-          <li part="">Developers and QA peeps should be screen reader experts
-            <!--
-            Ensure repeatability and consistency via libs
-            Documentation
-            Training
-            -->
-          </li>
+          <li part="">Developers and QA peeps should be screen reader experts</li>
         </ul>
       </div>
       <div flex="">
         <ul>
           <li part="">Make accessibility easier, repeatable</li>
-          <li part="">Build a11y into your process</li>
+          <li part="">Make a11y a core part of every step of project lifecycle</li>
           <li part="">Accessibility is a team effort</li>
-          <!--
-          Collaboration is key
-          True a11y is found at the intersection of sound technical solutions and informed user experience design
-          -->
-          <li part="">Be wary of "accessible" frameworks - test for yourself, BYO</li>
-          <li part="">Mimic native behaviors</li>
+          <li part="">Be wary of "accessible" frameworks - test for yourself, improve</li>
+          <li part="">Give back - share what you know, report issues</li>
         </ul>
       </div>
     </flex-line>
@@ -196,18 +186,25 @@
       <li part="">Focusing on an element reads its contents or label</li>
       <li part="">Use carefully - don't move focus unless necessary</li>
       <li part="">Only natively focusable or tabindexed elements can receive focus</li>
-      <li part="">Hard coding tabindex can be problematic --&gt; do not hard code tabindex</li>
+      <li part="">Hard coding tabindex can be problematic → <strong>do not hard code tabindex</strong></li>
       <li part="" class="strong">Use a script to dynamically manage focus&hellip;</li>
     </ul>
   </a-slide>
   <a-slide data-state="#access">
-    <h3>Focus on anything w/$.access()</h3>
+    <h3>Focus on anything w/ $.access()</h3>
     <h4> </h4>
     <div part="">
       <h4>How it works:</h4>
       <ul>
         <li>Adds <code>tabindex="-1"</code>, places focus and cleans up on <code>focusout</code></li>
       </ul>
+      <code-block language="javascript">
+         
+        	$("#home_section").access(); //→ places focus on the element
+         
+        	$("#home_section").access(true); //→ places focus before the element
+         
+      </code-block>
     </div>
     <div part="">
       <h4>Example Usage:</h4>
@@ -215,7 +212,7 @@
         <li>Focused item is no longer available</li>
         <li>Modals</li>
         <li>SPA view updates</li>
-      </ul><a href="http://jsfiddle.net/pfox/bLkvuhap/show/light/" target="access">$.access() in action -&gt;</a>
+      </ul><a href="http://jsfiddle.net/pfox/bLkvuhap/show/light/" target="access">$.access() in action →</a>
     </div>
   </a-slide>
   <a-slide>
@@ -226,7 +223,7 @@
       <li>alerts</li>
       <li>errors</li>
       <li>notifications</li>
-      <li>any pertinent update	a-slide</li>
+      <li>any pertinent update</li>
     </ul>
   </a-slide>
   <a-slide>
@@ -254,7 +251,7 @@
       <h4>Live region pitfalls:</h4>
       <ul>
         <li>Multiple live regions cumbersome to manage</li>
-        <li>Live region roles(status, alert, log) don't work reliably</li>
+        <li>Live region roles(status, alert, log, timer) don't work reliably</li>
         <li>Ad-hoc live region use adds complexity, risk</li>
       </ul>
     </div>
@@ -273,7 +270,7 @@
       <li>Create common @aria-live “announcer” element</li>
       <li>Announcer needs to be in DOM on page load and left alone</li>
       <li>Reset technique allows repeat announcements</li>
-    </ul><a href="http://jsfiddle.net/pfox/ou11fr9p/show" target="_blank">Live Region Example -&gt;</a><br/><a href="http://bit.ly/a11y_kit" target="_blank">Accessibility Kit Library -&gt;</a>
+    </ul><a href="http://jsfiddle.net/pfox/ou11fr9p/show" target="_blank">Live Region Example →</a><br/><a href="http://bit.ly/a11y_kit" target="_blank">Accessibility Kit Library →</a>
   </a-slide>
   <a-slide>
     <h3>UI Isolation</h3>
@@ -287,7 +284,7 @@
   <a-slide>
     <h3>Complex UI</h3>
     <ul>
-      <li part="">What is overly complex for AT users is overly complex for everyone</li>
+      <li part="">Overly complex for AT users === overly complex for everyone</li>
       <li part="">Don't try to do too much in one view</li>
       <li part="">Provide extra help where needed</li>
     </ul>
@@ -295,23 +292,32 @@
   <a-slide>
     <h3>Alternate Copy and Labeling</h3>
     <h4>Additional copy used to improve accessibility</h4>
-    <p><strong>Examples:</strong> button/link copy, form errors, visual translations</p>
-    <p>Labeled elements are interactive</p>
-    <p>Minimize use of alternate content</p>
-    <p>Space contraints or visual context may allow for shorter visible text</p>
-    <h4>Uses:</h4>
-    <ul> 
-      <li>Summarizing complex copy</li>
-    </ul>
+    <flex-line>
+      <div part="" flex="">
+        <h4>Uses:</h4>
+        <ul> 
+          <li>Summarizing complex copy</li>
+          <li>Translating visual cues to spoken cues</li>
+          <li>Providing additional content to improve meaning</li>
+        </ul>
+      </div>
+      <div part="" flex="">
+        <h4>Tips:</h4>
+        <ul>
+          <li>Labeled elements are usually interactive</li>
+          <li>Minimize use of alternate content</li>
+        </ul>
+      </div>
+    </flex-line>
   </a-slide>
   <a-slide>
     <h3>Alternate Copy and Labeling</h3>
     <h4>Techniques:</h4>
     <ul>
-      <li><code>aria-label</code> -</li>
-      <li><code>aria-labelledby</code> -</li>
-      <li><code>aria-describedby</code> -</li>
-      <li><code>.visuallyhidden</code> CSS technique - </li>
+      <li><code>aria-label</code> - works well on buttons</li>
+      <li><code>aria-labelledby</code> - associate existing content to an element</li>
+      <li><code>aria-describedby</code> - additional descriptive content</li>
+      <li><code>.visuallyhidden</code> CSS technique - can be problematic on iOS</li>
       <li><code>title</code> - not reliable, don't use!</li>
     </ul>
   </a-slide>
@@ -324,11 +330,9 @@
                #label an element using another element's copy
       		&lt;div aria-labelledby="some_id another_id third_id"> 
                #additional descriptive content
-      		&lt;input aria-describedby="visual_descriptive_text" type="text" /> 
+      		&lt;input id="first_name" aria-describedby="visual_descriptive_text" type="text" /> 
        
-       
-       
-    </code-block><a href="">aria-labelledby example -&gt;</a>
+    </code-block><a href="">aria-labelledby example →</a>
   </a-slide>
   <a-slide>
     <h3>Responsive Design Considerations</h3>
@@ -336,7 +340,7 @@
     <ul>
       <li part="">Avoid overly complex UI changes</li>
       <li part="">Touch gestures require accessible equivalent</li>
-      <li part="">Manage state and functionality changes w/JS - <a href="" target="hamburger">Hamburger Menu -&gt;</a></li>
+      <li part="">Manage state and functionality changes w/JS - <a href="" target="hamburger">Hamburger Menu →</a></li>
       <li part="">Minimize swipes on mobile - simplify and use semantic markup</li>
       <li part=""><code>aria-hidden="false"</code> breaks iOS VO</li>
       <li part="">Test each break point&hellip;</li>
@@ -353,7 +357,7 @@
         <ul>
           <li>Icon fonts rely on Unicode character mapping</li>
           <li>MacOS VO used to read some Unicode characters as an audible beep</li>
-          <li><a href="https://vimeo.com/120737667" target="_blank">Some Unicode characters map to emoji -&gt;</a></li>
+          <li><a href="https://vimeo.com/120737667" target="_blank">Some Unicode characters map to emoji →</a></li>
         </ul>
       </li>
     </ul>
@@ -366,9 +370,9 @@
                #works but with audible "beep" and "alien" sign in VO
       		<a href="..." class="icon external" target="_blank">External link</a>
        
-               #better - use a span(aria-hidden=true)
+               #better - use a span(aria-hidden=true) to hide from screen readers
       		<a href="..." class="icon external" target="_blank">
-      			<span aria-hidden="true"></span>
+      			**<span aria-hidden="true"></span>**
                         External link
       		</a>
        
@@ -390,10 +394,11 @@
     <ul>
       <li part="">Generic tags are sometimes better, less verbose</li>
       <li part="">Most important: How is markup spoken?</li>
+      <li part="">Test options, use what sounds best</li>
       <li part="">Examples:
         <ul>
           <li part="">HTML5 sectioning elements spoken as landmarks</li>
-          <li part="">Buttons and anchors vs. generic elements</li>
+          <li part="">Use buttons &amp; anchors vs. generic elements</li>
           <li part="">UL/LI for true list content ONLY</li>
           <li part="">DL/DD/DT are overly verbose</li>
         </ul>
@@ -516,9 +521,9 @@
     <div part="">
       <ul>
         <li>Update page title from view to view</li>
-        <li>$.announce() "{new title} view loaded"</li>
+        <li>$.announce() "{new title} view loaded" on view loaded event</li>
         <li>$.access() new content</li>
-      </ul><a href="http://patrickfox.github.io/" target="_blank">Accessible Single-Page App -&gt;</a>
+      </ul><a href="http://patrickfox.github.io/" target="_blank">Accessible Single-Page App →</a><br/><a href="http://patrickfox.github.io/blog/screen-reader-page-load-behaviors.html" target="_blank">Screen reader page load behaviors →</a>
     </div>
   </a-slide>
   <a-slide>
@@ -540,26 +545,7 @@
           <li>ESC closes menu, place focus back on button; use <code>role=“menuitem”</code> on items in menu</li>
         </ul>
       </div>
-    </flex-line><a href="http://patrickfox.github.io/blog/accessible-popup-menus.html" target="_blank">Popup Menu Example -&gt;</a>
-  </a-slide>
-  <a-slide>
-    <h3>Accordion Content - TODO</h3>
-    <flex-line>
-      <div flex="">
-        <h4>Button:</h4>
-        <ul>
-          <li>aria-haspopup=true</li>
-          <li>aria-controls={id of menu}</li>
-          <li>aria-expanded={true|false}</li>
-        </ul>
-      </div>
-      <div flex=""> 
-        <h4>Container:</h4>
-        <ul>
-          <li>when collapsed, must be display:none to completely hide contents	a-slide</li>
-        </ul>
-      </div>
-    </flex-line>
+    </flex-line><a href="http://patrickfox.github.io/blog/accessible-popup-menus.html" target="_blank">Popup Menu Example →</a>
   </a-slide>
   <a-slide>
     <h3>Dynamic Messages</h3>
@@ -615,7 +601,7 @@
       <h4>On close:</h4>
       <ul>
         <li>return focus to button, last focused or main content</li>
-      </ul><a href="http://patrickfox.github.io/#/blog/accessible-modals" target="modal_example">Modal example -&gt;</a>
+      </ul><a href="http://patrickfox.github.io/#/blog/accessible-modals" target="modal_example">Modal example →</a>
     </div>
   </a-slide>
   <a-slide>
@@ -625,9 +611,9 @@
        
       		&lt;body>
       		    <div data-isolate class="shell" aria-hidden="true">
-                   #all page content lives here
+                   #all main page content lives here
       			</div>
-                   #modals live at body end
+                   #modals live at body end, hidden until activated
       		    <section data-modal-id="test_modal" role="dialog">...</section>
       		&lt;/body>
        
@@ -663,48 +649,57 @@
     <ul>
       <li>on button focus/blur, tooltip opens/closes</li>
       <li>tooltip contents are read upon button interaction</li>
-    </ul><a href="" target="_blank">Tooltip demo -&gt;</a>
+    </ul><a href="" target="_blank">Tooltip demo →</a>
   </a-slide>
-  <a-slide>
-    <h3>Inline Form Validation</h3>
-    <p>Inline, dynamic errors are problematic</p>
-    <div part="">
-      <h4>Tips:</h4>
-      <ul>
-        <li>Leverage field label to report error messaging</li>
-        <li>Use $.announce to speak errors</li>
-        <li>Use ARIA to communicate states:
-          <ul>
-            <li>@aria-invalid, @aria-required</li>
-          </ul>
-        </li>
-      </ul><a href="" target="_blank">Form validation demo -&gt;</a>
-    </div>
-  </a-slide>
-  <a-slide>
-    <h3> </h3>
-  </a-slide>
+  
   <a-slide data-state="intro">
-    <h2>Testing a11y</h2>
+    <h2>Deep Dive: Responsive Menus</h2>
   </a-slide>
+  <!--
+  good
+  needs work
+  menu improvements
+  
+  
+  -->
   <a-slide>
-    <h3>Testing Tips</h3>
+    <h3>Starbucks.com</h3>
+    <h4>Overall, site is pretty solid</h4>
     <ul>
-      <li part="">Test early, test often</li>
-      <li part="">Devs and testers should be *expert* screen reader users</li>
-      <li part="">Use VM’s, devices, and mobile emulators</li>
-      <li part="">Automate testing where possible</li>
-      <li part="">Use testing tools to cover basics(e.g. FireEyes), beware false positives</li>
+      <li>Responsive</li>
+      <li>Accessible</li>
+      <li>A couple of things though...</li>
     </ul>
   </a-slide>
   <a-slide>
-    <h3>Testing Tools</h3>
+    <h3>Starbucks.com</h3>
+    <div part="">
+      <h4>Problem: hard coded tabindex causes issues</h4>
+      <ul>
+        <li>6 <code>tabindex="0"</code> on main content areas</li>
+        <li>4 <code>tabindex="-1"</code> on other areas</li>
+      </ul>
+    </div>
+    <div part="">
+      <h4>Solution: use $.access() !</h4>
+    </div>
+  </a-slide>
+  <a-slide>
+    <h3>Starbucks.com</h3>
+    <h4>Problem: Hidden menu items still navigable</h4>
     <ul>
-      <li part="">FireEyes</li>
-      <li part="">Tenon</li>
-      <li part=""> </li>
-      <li part="">Automate testing where possible</li>
-      <li part="">Use testing tools to cover basics(e.g. FireEyes), beware false positives</li>
+      <li>CSS transitions used to animate menu open/close</li>
+      <li><code>aria-hidden</code> is problematic in VoiceOver</li>
+      <li><code>display:none;</code> should be used to hide menus when closed</li>
+      <li>Timing is key: hide menus <em>after</em> CSS transition ends</li>
+    </ul>
+  </a-slide>
+  <a-slide>
+    <h3>Starbucks.com</h3>
+    <h4>Solution: Use <code>transitionend</code> event on menu close</h4>
+    <ul>
+      <li>Event fires on end of CSS transition</li>
+      <li>Set menu display <code>display:none;</code></li>
     </ul>
   </a-slide>
   <a-slide data-state="intro">
@@ -718,14 +713,31 @@
       <li part="">VoiceOver Help: <a href="http://bit.ly/VO_Help" target="at_help">bit.ly/VO_Help</a></li>
     </ul>
   </a-slide>
+  <a-slide>
+    <h3>Testing Tools</h3>
+    <h4>Automate testing where possible</h4>
+    <ul>
+      <li>FireEyes</li>
+      <li>Tenon.io</li>
+    </ul>
+  </a-slide>
   <a-slide data-state="intro">
     <h2>Summary</h2>
+  </a-slide>
+  <a-slide>
+    <h3>Cheat Sheet</h3>
     <ul>
-      <li>$.announce and $.access your modern UI w/a11y_kit - bit.ly/a11y_kit</li>
-      <li>Examples - moderna11y.com</li>
+      <li> </li>
+      <li>$.announce() and $.access() your modern UI w/a11y_kit - bit.ly/a11y_kit
+        <ul>
+          <li>Don't hard code <code>tabindex</code> - use $.access()</li>
+          <li>One live region(aria-live) per view - use $.announce()</li>
+        </ul>
+      </li>
+      <li>Use <code>aria-labelledby</code> to summarize complex content</li>
       <li></li>
       <li></li>
-      <li></li>
+      <li>Share what you learn!</li>
     </ul>
   </a-slide>
   <a-slide data-state="intro">

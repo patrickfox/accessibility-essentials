@@ -125,8 +125,8 @@ body[data-state="map"] {
 }
 
 h2, h3 {
-  font-family: 'Maven Pro';
-  font-weight:300;
+/*  font-family: 'Maven Pro';
+  font-weight:300;*/
   opacity: 0;
   -webkit-transition: transform .5s, opacity .5s, text-shadow 2s;
 }
@@ -139,6 +139,7 @@ h2 {
 h3 {
   transform: translateX(100px);
   transition-delay: .4s;
+  font-size: 1.75em;
 }
 
 h4 {
@@ -151,11 +152,11 @@ ul ul {
 
 
 a-slide[history="present"][data-state="intro"] h2 {
-  text-shadow: 0 0 10px #fff;
+  text-shadow: 0 0 4px rgba(255,255,255,.4);
 }
 
 a-slide[history="present"] h3 {
-  text-shadow: 0 0 10px rgba(0,0,0,.3);
+  /*text-shadow: 0 3px 5px rgba(0,0,0,.3);*/
 }
 
 a-slide[history="present"] h2, a-slide[history="present"] h3 {
@@ -204,6 +205,9 @@ thead tr {
 tbody tr:hover {
   background-color: #3d78ff;
   color: #fff;
+}
+tbody tr:hover code {
+  background-color: #9ab8ff;
 }
 
 footer[role="contentinfo"] {
@@ -266,3 +270,4 @@ footer[role="contentinfo"] {
     font-style: normal;
 }
 
+pre {padding-top:0;}
