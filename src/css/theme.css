@@ -219,6 +219,9 @@ footer[role="contentinfo"] {
 
 .start p a {
   display: block;
+  float: left;
+  clear: both;
+  line-height: 1.3em;
 }
 
 .jsmvc {
