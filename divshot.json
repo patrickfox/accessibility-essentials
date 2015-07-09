@@ -1,0 +1,6 @@
+{
+  "name": "accessu2015-moderna11y",
+  "root": "./build",
+  "clean_urls": true,
+  "error_page": "error.html"
+}

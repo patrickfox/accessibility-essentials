@@ -1,0 +1,296 @@
+doctype html(lang='en')
+head
+	meta(charset='utf-8')
+	title Modern A11y for Modern Web Apps - OSCON PDX 2015
+	script(src='bower_components/webcomponentsjs/webcomponents.js')
+	link(rel='import', href='bower_components/slide-deck/a-slide-deck.html')
+	link(rel='import', href='bower_components/slide-deck/a-slide.html')
+	link(rel='import', href='bower_components/slide-deck/code-block.html')
+	link(rel='import', href='elements/flex-grid.html')
+	link(rel='import', href='elements/flex-line.html')
+	link(rel='stylesheet', href='css/theme.css')
+	-demo_base_url = "http://localhost:3001/"
+body(is='a-slide-deck', unresolved='')
+	div
+	a-slide.start
+		h1 Modern Web A11y
+		h3(style='margin-top:-.4em; font-weight:400') OSCON PDX 2015
+		p
+			p Patrick Fox
+			a(href='http://github.com/patrickfox', target='_blank') github.com/patrickfox
+			br
+			a(href='http://twitter.com/patrickfox', target='_blank') @patrickfox
+			br
+			a(href='http://twitter.com/razorfish', target='_blank') @razorfish
+			br
+			a(href='https://twitter.com/hashtag/moderna11y', target='_blank') #moderna11y
+	a-slide
+		h3 Agenda
+		ul
+			li Introduction (5 min)
+			li Implementation Best practices (5 min)
+			li Modern A11y Techniques (15 min)
+			li Demos (15 min)
+	
+	a-slide(data-state="intro")
+		h2 Introduction
+
+	a-slide
+		h3 So, what is this workshop about?
+		ul
+			li(part='') Modern accessibility challenges and solutions
+			li(part='') Technical considerations and best practices
+
+	a-slide
+		h3 Terminology
+		flex-line
+			div(flex='')
+				ul
+					li(part='') #[strong a11y] = accessibility
+					li(part='') #[strong AT] = assistive technology
+					li(part='') #[strong Screen reader] = software that interprets code and reads content
+					li(part='') #[strong WAI-ARIA] = W3C technical spec, enables modern a11y
+					li(part='') #[strong WCAG2] = W3C a11y guidelines, v2
+
+	a-slide
+		h3 Goals of A11y
+		ul
+			li(part='') Inclusivity, equality
+			li(part='') #[strong Exceed the standards] - focus on empathy, usability
+			li(part='') Ensure that screen readers, browsers and code are able to communicate UI structure, states, properties to users
+			li(part='') Device independent navigation
+		div(part='') 
+			p
+				em "Accessibility is usability in context of disability"
+			p - Jan Eric Hellbusch, #[a(href="http://bit.ly/a11y-is-usability" target='a11yusability') bit.ly/a11y-is-usability ]
+		div(part='') 
+			p
+				em "Empathy encourages you to understand who uses your product, forces you ask deeper questions and motivates the many redesigns you go through to get a product right."
+			p - Scott Jensen, #[a(href="http://bit.ly/a11y-empathy" target='empathy') bit.ly/a11y-empathy ]
+
+	a-slide
+		h3 Modern A11y Challenges
+		div(part)
+			p #[strong Dynamic UI:] content updates, state changes not communicated
+			ul
+				li Dynamic errors/notifications
+				li View updates in single-page apps
+		div(part)
+			p #[strong Custom UI:] role and purpose of non-native widgets not understood
+			ul
+				li Custom drop-down menus
+				li Modals
+				li Tooltips
+				li Accordion content
+
+	a-slide
+		h3 ARIA Powers Modern A11y
+		p ARIA specifies a set of attributes that allow us to communicate:
+		ul
+			li States: #[code aria-enabled], #[code aria-selected]
+			li Properties: #[code aria-haspopup]
+			li Roles: #[code role="dialog"]
+			li Relationships: #[code aria-labelledby], #[code aria-controls]
+			li Live region: #[code aria-live]
+
+	a-slide
+		h3 Screen Readers
+		flex-line
+			div(flex='')
+				ul
+					li(part='') Speak document content
+					li(part='') Provide navigation tools
+						ul
+							li Headings
+							li Landmarks
+							li Forms and form fields
+							li Links, buttons
+							li Element by element
+					li(part='') A11y feature support varies
+
+	a-slide
+		h3 Modern A11y Goals and Tips
+		flex-line
+			div(flex='')
+				ul
+					li(part='') Create lean, elegant, robust technical solutions
+					li(part='') Minimize use of ARIA - rely on semantic code first
+					li(part='') Aim for widest screen reader/browser support possible
+					li(part='') Test often - don't wait until the end
+					li(part='') Developers and QA peeps should be screen reader experts
+			div(flex='')
+				ul
+					li(part='') Make accessibility easier, repeatable
+					li(part='') Make a11y a core part of every step of project lifecycle
+					li(part='') Accessibility is a team effort
+					li(part='') Be wary of "accessible" frameworks - test for yourself, improve
+					li(part='') Give back - share what you know, report issues
+
+	a-slide(data-state="intro")
+		h2 Modern A11y Techniques
+
+	a-slide
+		h3 Announcing Content
+		h4 Live regions automatically speak content updates
+		p Use cases:
+		ul
+			li alerts
+			li errors
+			li notifications
+			li any pertinent update
+	a-slide
+		h3 Announcing Content
+		h4 Implementation:
+		code-block(language="html")
+			| 
+			| 		# aria-live={polite || assertive}
+			|		<section aria-live="polite">...</section>
+			| 
+			| 		# log is shorthand for aria-live="polite"
+			|		<section role="log">...</section>
+			| 
+			| 		# alert is shorthand for aria-live="assertive"
+			|		<section role="alert"></section>
+			| 
+			| 		# status is shorthand for aria-live="polite"
+			|		<section role="status"></section>
+			| 
+	a-slide(data-state="lotr")
+		h3 One Live Region To Rule Them All
+		div(part='')
+			h4 Live region pitfalls:
+			ul
+				li Multiple live regions cumbersome to manage
+				li Live region roles(status, alert, log, timer) don't work reliably
+				li Ad-hoc live region use adds complexity, risk
+		div(part='')
+			h4 Best practices:
+			ul
+				li Use only ONE live region in your entire site/app
+				li Use a script to announce content&hellip;
+	a-slide
+		h3 Say Anything w/$.announce()
+		h4 How it works:
+		ul
+			li Create common @aria-live “announcer” element
+			li Announcer needs to be in DOM on page load and left alone
+			li Reset technique allows repeat announcements
+		a(href="http://jsfiddle.net/pfox/ou11fr9p/show", target="_blank") Live Region Example →
+		br
+		a(href="http://bit.ly/a11y_kit", target="_blank") A11y Kit Library →
+
+	a-slide
+		h3 ID management and #[code $.get_guid()]
+		ul
+			li
+
+	a-slide(data-state="intro")
+		h2 Demos
+
+	a-slide
+		h3.jsmvc Single Page Architecture
+		h4(part='') Intial page load, subsequent dynamic view updates via Ajax
+		p(part='') #[strong Problem:] No page refresh - screen reader unaware of view updates
+		p(part='') #[strong Solution:] Emulate native refresh, $.announce() status updates on view loaded
+		div(part='')
+			ul
+				li Update page title from view to view
+				li $.announce() #[em "{new title} view loaded"] on "view loaded/updated" event
+				li Use $.access() to dynamically place focus on new content area
+			a(href="http://moderna11y.com/#/blog/screen-reader-page-load-behaviors.html" target="_blank") Screen reader page load behaviors →
+
+	a-slide
+		h3 Example: AngularJS
+		ul
+			li Update and announce title on #[code $viewContentLoaded]
+		code-block(language="javascript")
+			| 
+			|     app.controller "PageCtrl", ($scope, $location, $http) -&gt;
+			|         $scope.$on '$viewContentLoaded', announce_view_loaded
+			|         ...
+			| 
+
+		a(href="http://localhost:3000/" target="_blank") Accessible Angular App →
+
+	a-slide
+		h3 Example: React
+		ul
+			li Update and announce title via #[code componentDidUpdate]
+		code-block(language="javascript")
+			| 
+			|     componentDidUpdate: -&gt;
+			|         //NOTE: make sure this is only called for *view* updates
+			|         @make_announcement()
+			|         @setPageScroll()
+			| 
+			|     make_announcement: (message) -&gt;
+			|         message = message || @getViewUpdateMsg()
+			|         $.announce(message, 'assertive')
+			| 
+
+	a-slide
+		h3 Accessible Modals
+		h4 Example usage:
+			li user or system initiated prompts
+			li display of extra details
+	a-slide
+		h3 Modal Goals
+		ul
+			li Prevent confusion
+			li Focus and maintain user's attention on modal UI
+			li Prevent interaction with background content
+				ul
+					li Tabbing
+					li Screen reader virtual navigation
+			li Commnicate modal presence and purpose
+	a-slide
+		h3 Modal Setup
+		ul
+			li start heading order with H1
+			li use #[code aria-labelledby] to label modal
+			li add #[code role=dialog] to container
+	a-slide
+		h3 Modal Open
+		ul
+			li focus on first focusable or dialog body
+			li isolate modal UI from view content(#[code aria-hidden])
+			li dialog is announced
+	a-slide
+		h3 Modal Close
+		ul
+			li return focus to button, last focused or main content
+			li reset everything
+
+	a-slide
+		h3 Modal Isolation Detail
+		code-block(language="html")
+			| 
+			| 		<body>
+			|		    <div data-isolate class="shell" aria-hidden="true">
+			|              #all main page content lives here
+			|		    </div>
+			|              #modals live at body end, hidden until activated
+			|		    <section data-modal-id="test_modal" role="dialog">...</section>
+			|		</body>
+			| 
+		ul
+			li(part='') Main content lives in one element - #[code div(data-isolate)]
+			li(part='') Hide page content from screen reader - #[code aria-hidden=true]
+			li(part='') Focus listener returns page focus to modal
+
+
+	a-slide(data-state="intro")
+		h2 Thanks!
+		p
+			a(href='http://github.com/patrickfox', target='_blank') github.com/patrickfox
+			br
+			a(href='http://twitter.com/patrickfox', target='_blank') @patrickfox
+			br
+			a(href='http://twitter.com/razorfish', target='_blank') @razorfish
+
+
+	footer(role="contentinfo")
+		span 
+			a(href="/") Home
+
+

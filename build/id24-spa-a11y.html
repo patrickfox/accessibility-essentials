@@ -1,0 +1,263 @@
+<!DOCTYPE html(lang='en')>
+<head>
+  <meta charset="utf-8"/>
+  <title>Improving Single Page App Accessibility</title>
+  <script src="bower_components/webcomponentsjs/webcomponents.js"></script>
+  <link rel="import" href="bower_components/slide-deck/a-slide-deck.html"/>
+  <link rel="import" href="bower_components/slide-deck/a-slide.html"/>
+  <link rel="import" href="bower_components/slide-deck/code-block.html"/>
+  <link rel="import" href="elements/flex-grid.html"/>
+  <link rel="import" href="elements/flex-line.html"/>
+  <link rel="stylesheet" href="css/theme.css"/>
+</head>
+<body is="a-slide-deck" unresolved="">
+  <div></div>
+  <a-slide class="start">
+    <h1>Improving Single Page App A11y</h1>
+    <h3 style="margin-top:-.4em; font-weight:400">Inclusive Design 24 (<a href="https://twitter.com/hashtag/ID24">#ID24</a>)</h3>
+    <p>
+      <p>Patrick Fox</p><a href="http://github.com/patrickfox" target="_blank">github.com/patrickfox</a><br/><a href="http://twitter.com/patrickfox" target="_blank">@patrickfox</a><br/><a href="http://twitter.com/razorfish" target="_blank">@razorfish</a>
+    </p>
+  </a-slide>
+  <a-slide>
+    <h3>Agenda</h3>
+    <ul>
+      <li>Introduction </li>
+      <li>Modern Web UI Challenges</li>
+      <li>Single Page App A11y</li>
+    </ul>
+  </a-slide>
+  <a-slide data-state="intro">
+    <h2>Introduction</h2>
+  </a-slide>
+  <a-slide>
+    <h3>So, what is this presentation about?</h3>
+    <ul>
+      <li part="">Modern accessibility challenges and solutions</li>
+      <li part="">Design and technical considerations and best practices</li>
+      <li part="">Terminology for modern accessibility techniques</li>
+      <li part="">Engaging and efficient web UX for people of all abilities</li>
+    </ul>
+  </a-slide>
+  <a-slide>
+    <h3>Terminology</h3>
+    <flex-line>
+      <div flex="">
+        <ul>
+          <li part=""><strong>a11y</strong> = accessibility</li>
+          <li part=""><strong>AT</strong> = assistive technology</li>
+          <li part=""><strong>Screen reader</strong> = software that interprets code and reads content</li>
+          <li part=""><strong>WAI-ARIA</strong> = W3C technical spec, enables modern a11y</li>
+          <li part=""><strong>WCAG2</strong> = W3C a11y guidelines, v2</li>
+        </ul>
+      </div>
+    </flex-line>
+  </a-slide>
+  <a-slide>
+    <h3>Compliance vs. Usability</h3>
+    <ul>
+      <li part="">"Standards/WCAG compliant" is not good enough</li>
+      <li part="">Make experiences user-friendly for people of all abilities</li>
+      <li part="">"Create beautiful, elegant, accessible, innovative web experiences"</li>
+    </ul>
+    <div part=""> 
+      <p><em>"Accessibility is usability in context of disability"</em></p>
+      <p>- Jan Eric Hellbusch, <a href="http://bit.ly/a11y-is-usability" target="a11yusability">bit.ly/a11y-is-usability </a></p>
+    </div>
+    <div part=""> 
+      <p><em>"Empathy encourages you to understand who uses your product, forces you ask deeper questions and motivates the many redesigns you go through to get a product right."</em></p>
+      <p>- Scott Jensen, <a href="http://bit.ly/a11y-empathy" target="empathy">bit.ly/a11y-empathy </a></p>
+    </div>
+  </a-slide>
+  <a-slide>
+    <h3>Modern A11y Goals and Tips</h3>
+    <flex-line>
+      <div flex="">
+        <ul>
+          <li part="">Create lean, elegant, robust technical solutions</li>
+          <li part="">Minimize use of ARIA - rely on semantic code first</li>
+          <li part="">Aim for widest screen reader/browser support possible</li>
+          <li part="">Test often - don't wait until the end</li>
+          <li part="">Developers and QA peeps should be screen reader experts</li>
+        </ul>
+      </div>
+      <div flex="">
+        <ul>
+          <li part="">Make a11y a core part of every step of project lifecycle</li>
+          <li part="">Accessibility is a team effort</li>
+          <li part="">Make accessibility easier, repeatable</li>
+          <li part="">Be wary of "accessible" frameworks - test for yourself, improve</li>
+          <li part="">Give back - share what you know, report issues</li>
+        </ul>
+      </div>
+    </flex-line>
+  </a-slide>
+  <a-slide data-state="intro">
+    <h2>Modern Web UI Challenges</h2>
+  </a-slide>
+  <a-slide>
+    <h3>Dynamic UI</h3>
+    <p>Common Functionality</p>
+    <ul>
+      <li>Custom drop-down menus</li>
+      <li>Modals</li>
+      <li>Tooltips</li>
+      <li>Accordion content</li>
+      <li>Dynamic errors/notifications</li>
+    </ul>
+  </a-slide>
+  <a-slide>
+    <h3>AT doesn't recognize content/UI changes</h3>
+    <ul>
+      <li>Native HTML, JavaScript lack means to communicate DOM updates</li>
+      <li>Custom UI widget purpose and interactions not understood</li>
+      <li>Screen readers are geared towards static documents</li>
+    </ul>
+  </a-slide>
+  <a-slide>
+    <h3>ARIA Makes Modern A11y Possible</h3>
+    <ul>
+      <li>Live region: <code>aria-live</code></li>
+      <li>States: <code>aria-enabled</code>, <code>aria-selected</code></li>
+      <li>Properties: <code>aria-haspopup</code></li>
+      <li>Roles: <code>role="dialog"</code></li>
+      <li>Relationships: <code>aria-labelledby</code>, <code>aria-controls</code></li>
+    </ul>
+  </a-slide>
+  <a-slide>
+    <h3>Announcing Content</h3>
+    <h4>Live regions automatically speak content updates</h4>
+    <p>Use cases:</p>
+    <ul>
+      <li>alerts</li>
+      <li>errors</li>
+      <li>notifications</li>
+      <li>any pertinent update</li>
+    </ul>
+  </a-slide>
+  <a-slide>
+    <h3>Announcing Content</h3>
+    <h4>Implementation:</h4>
+    <code-block language="html">
+       
+      		# aria-live={polite | assertive | off}
+      		<div aria-live="polite">...</div>
+       
+      		# log is shorthand for aria-live="polite"
+      		<div role="log">...</div>
+       
+      		# alert is shorthand for aria-live="assertive"
+      		<div role="alert"></div>
+       
+      		# status is shorthand for aria-live="polite"
+      		<div role="status"></div>
+       
+    </code-block>
+  </a-slide>
+  <a-slide data-state="lotr">
+    <h3>One Live Region To Rule Them All</h3>
+    <div part="">
+      <h4>Live region pitfalls:</h4>
+      <ul>
+        <li>Multiple live regions cumbersome to manage</li>
+        <li>Ad-hoc live region use adds complexity, risk</li>
+        <li>Live region roles(status, alert, log, timer) don't work reliably</li>
+      </ul>
+    </div>
+    <div part="">
+      <h4>Best practices:</h4>
+      <ul>
+        <li>Use only ONE live region in your entire site/app</li>
+        <li>Use a common script to announce content&hellip;</li>
+      </ul>
+    </div>
+  </a-slide>
+  <a-slide>
+    <h3>Say Anything w/$.announce()</h3>
+    <h4>How it works:</h4>
+    <ul>
+      <li>Create common @aria-live “announcer” element</li>
+      <li>Announcer needs to be in DOM on page load and left alone</li>
+      <li>Reset technique allows repeat announcements</li>
+    </ul><a href="http://jsfiddle.net/pfox/ou11fr9p/show" target="_blank">Live Region Example →</a><br/><a href="http://bit.ly/a11y_kit" target="_blank">A11y Kit Library →</a>
+  </a-slide>
+  <a-slide data-state="intro">
+    <h2>Single Page App A11y</h2>
+  </a-slide>
+  <a-slide>
+    <h3 class="jsmvc">Single Page Architecture</h3>
+    <h4 part="">Intial page load, subsequent dynamic view updates via Ajax</h4>
+    <p part=""><strong>Problem:</strong> No page refresh - screen reader unaware of view updates</p>
+    <p part=""><strong>Solution:</strong> Emulate native refresh, $.announce() status updates on view loaded</p>
+    <div part="">
+      <ul>
+        <li>Update page title from view to view</li>
+        <li>$.announce() "{new title} view loaded" on "view loaded/updated" event</li>
+        <li>Use $.access() to dynamically place focus on new content area</li>
+      </ul><a href="http://localhost:3000/#/blog/screen-reader-page-load-behaviors.html" target="_blank">Screen reader page load behaviors →</a>
+    </div>
+  </a-slide>
+  <a-slide>
+    <h3>Example: AngularJS</h3>
+    <ul>
+      <li>Update and announce title on <code>$viewContentLoaded</code></li>
+    </ul>
+    <code-block language="javascript">
+       
+          app.controller "PageCtrl", ($scope, $location, $http) -&gt;
+              $scope.$on '$viewContentLoaded', announce_view_loaded
+              ...
+       
+    </code-block><a href="http://localhost:3000/" target="_blank">Accessible Angular App →</a>
+  </a-slide>
+  <a-slide>
+    <h3>Example: React</h3>
+    <ul>
+      <li>Update and announce title via <code>componentDidUpdate</code></li>
+    </ul>
+    <code-block language="javascript">
+       
+          componentDidUpdate: -&gt;
+              //NOTE: make sure this is only called for *view* updates
+              @make_announcement()
+              @setPageScroll()
+       
+          make_announcement: (message) -&gt;
+              message = message || @getViewUpdateMsg()
+              $.announce(message, 'assertive')
+       
+    </code-block>
+  </a-slide>
+  <a-slide data-state="intro">
+    <h2>Summary</h2>
+  </a-slide>
+  <a-slide>
+    <h3>Cheat Sheet</h3>
+    <ul>
+      <li part="">Minimize use of ARIA</li>
+      <li part="">Maximize foundation of semantic markup, and solid design and content strategy</li>
+      <li part="">Announce and access your modern UI w/a11y_kit, judiciously&hellip;
+        <ul>
+          <li>One live region for your app - use <code>$.announce()</code></li>
+          <li>Don't hard code <code>tabindex</code> - use <code>$.access()</code> to manage focus</li>
+        </ul>
+      </li>
+      <li part="">Keep your code lean and maintainable</li>
+    </ul>
+  </a-slide>
+  <a-slide>
+    <h3>Demos</h3>
+    <ul>
+      <li>$.announce() demo - <a href="http://bit.ly/a11y_say_anything" target="announce">bit.ly/a11y_say_anything</a></li>
+      <li>$.access() demo - <a href="http://bit.ly/a11y_access" target="access">bit.ly/a11y_access</a></li>
+    </ul>
+  </a-slide>
+  <a-slide data-state="intro">
+    <h2>Questions, Comments?</h2>
+  </a-slide>
+  <a-slide data-state="intro">
+    <h2>Thanks!</h2>
+    <p><a href="http://github.com/patrickfox" target="_blank">github.com/patrickfox</a><br/><a href="http://twitter.com/patrickfox" target="_blank">@patrickfox</a><br/><a href="http://twitter.com/razorfish" target="_blank">@razorfish</a></p>
+  </a-slide>
+  <footer role="contentinfo"><span> <a href="/">Home</a></span></footer>
+</body>

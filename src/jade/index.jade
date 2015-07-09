@@ -1,7 +1,7 @@
 doctype html(lang='en')
 head
 	meta(charset='utf-8')
-	title Modern Web A11y Workshop - SXSW Interactive 2015
+	title Modern Web A11y Workshop - John Slatin Access U 2015
 	script(src='bower_components/webcomponentsjs/webcomponents.js')
 	link(rel='import', href='bower_components/slide-deck/a-slide-deck.html')
 	link(rel='import', href='bower_components/slide-deck/a-slide.html')
@@ -9,11 +9,12 @@ head
 	link(rel='import', href='elements/flex-grid.html')
 	link(rel='import', href='elements/flex-line.html')
 	link(rel='stylesheet', href='css/theme.css')
+	-demo_base_url = "http://localhost:3001/"
 body(is='a-slide-deck', unresolved='')
 	div
 	a-slide.start
 		h1 Modern Web A11y Workshop
-		h3(style='margin-top:-.4em; font-weight:400') SXSW Interactive 2015
+		h3(style='margin-top:-.4em; font-weight:400') John Slatin Access U 2015
 		p
 			p Patrick Fox
 			a(href='http://github.com/patrickfox', target='_blank') github.com/patrickfox
@@ -29,8 +30,8 @@ body(is='a-slide-deck', unresolved='')
 	a-slide
 		h3 Overview
 		ul
-			li(part='') Introduction - 3:30pm (15 min)
-			li(part='') Tools and Techniques - 3:45pm (1 hr)
+			li Introduction - 8:30 am (15 min)
+			li Tools and Techniques - 8:45 am (1 hr)
 				//- ul
 				//- 	li Focus Management
 				//- 	li Announcing Content
@@ -38,18 +39,19 @@ body(is='a-slide-deck', unresolved='')
 				//- 	li Alternate Copy and Labelling
 				//- 	li Icon Fonts
 
-			li(part='') Implementing Accessibility - 4:45 pm (45 min)
+			li Quick Break - 9:45 am (15 min)
+			li Implementing Accessibility - 10:00 am (90 min)
 				//- ul
 				//- 	li Focus Management
 				//- 	li Announcing Content
 				//- 	li UI Isolation and Tab Fence
 				//- 	li Alternate Copy and Labelling
 				//- 	li Icon Fonts
-			li(part='') Deep Dive: Responsive Menus - 5:30 pm (15 min)
+			li Deep Dive: Responsive Menus - 11:30 am (15 min)
 
 
 	a-slide
-		h3 What is this workshop about?
+		h3 So, what is this workshop about?
 		ul
 			li(part='') Modern accessibility challenges and solutions
 			li(part='') Design and technical considerations and best practices
@@ -94,11 +96,11 @@ body(is='a-slide-deck', unresolved='')
 		div(part='') 
 			p
 				em "Accessibility is usability in context of disability"
-			p - Jan Eric Hellbusch, #[a(href="http://bit.ly/a11y-is-usability") bit.ly/accessibility-is-usability ]
+			p - Jan Eric Hellbusch, #[a(href="http://bit.ly/a11y-is-usability" target='a11yusability') bit.ly/a11y-is-usability ]
 		div(part='') 
 			p
 				em "Empathy encourages you to understand who uses your product, forces you ask deeper questions and motivates the many redesigns you go through to get a product right."
-			p - Scott Jensen, #[a(href="http://bit.ly/a11y-empathy") bit.ly/a11y-empathy ]
+			p - Scott Jensen, #[a(href="http://bit.ly/a11y-empathy" target='empathy') bit.ly/a11y-empathy ]
 
 	a-slide
 		h3 Screen Readers
@@ -179,12 +181,14 @@ body(is='a-slide-deck', unresolved='')
 			li(part='') Manage focus only to improve understanding, avoid frustration
 			li(part='') Focusing on an element reads its contents or label
 			li(part='') Only natively focusable elements or elements w/#[code tabindex] can receive focus
+		a(part='' href='http://americanexpress.com/', target="tabnidex") Tabindex Anti-pattern Example →
+
 	a-slide
 		h3 Using Tabindex
 
 		p(part='') Tips:
 			li(part='') Hard coding #[code tabindex] can be problematic
-			li(part='') #[strong Do not use] #[code tabindex="0"]
+			li(part='') #[strong Do not use] #[code tabindex="{&gt;=0}"]
 			li.strong(part='') Use a script to dynamically manage focus&hellip;
 
 	a-slide(data-state="#access")
@@ -193,7 +197,7 @@ body(is='a-slide-deck', unresolved='')
 		ul
 			li(part="") Adds #[code tabindex="-1"]
 			li(part="") Places focus on the target element
-			li(part="") Listens for #[code focusout] event and cleans up everything
+			li(part="") On #[code focusout], tabindex and event listeners are removed
 
 	a-slide(data-state="#access")
 		h3 Using $.access()
@@ -310,13 +314,13 @@ body(is='a-slide-deck', unresolved='')
 		code-block(language='html')
 			| 
 			|		<button aria-label="Edit email">Edit</button>
-			|          #label an element using another element's copy
-			|		&lt;div aria-labelledby="some_id another_id third_id"> 
-			|          #additional descriptive content
-			|		&lt;input id="first_name" aria-describedby="visual_descriptive_text" type="text" /> 
+			|         #label an element using another element's copy
+			|		&lt;div aria-labelledby="some_id another_id third_id">
+			|         #additional descriptive content
+			|		&lt;label for="first_name">First Name&lt;/label>
+			|		&lt;input id="first_name" aria-describedby="visual_descriptive_text" type="text" />
+			|		&lt;span>Please provide your full legal first name&lt;/span>
 			| 
-
-		a(href='') aria-labelledby example →
 
 	a-slide
 		h3 Responsive Design Considerations
@@ -324,7 +328,7 @@ body(is='a-slide-deck', unresolved='')
 		ul
 			li(part='') Avoid overly complex UI changes - keep content flow the same
 			li(part='') Touch gestures require accessible equivalent
-			li(part='') Manage state and functionality changes w/JS - #[a(href='', target='hamburger') Hamburger Menu →]
+			li(part='') Manage state and functionality changes w/JS (e.g. CSS transitions)
 			li(part='') Minimize swipes on mobile - simplify and use semantic markup
 			li(part='') #[code aria-hidden="false"] breaks iOS VO
 			li(part='') Test each break point&hellip;
@@ -474,15 +478,15 @@ body(is='a-slide-deck', unresolved='')
 		h3.jsmvc Single Page Architecture
 		h4 Intial page load, subsequent dynamic view updates via Ajax
 		p(part='') #[strong Problem:] No page refresh - screen reader unaware of view updates
-		p(part='') #[strong Solution:] $.announce() status updates on view loaded
+		p(part='') #[strong Solution:] Emulate native refresh, $.announce() status updates on view loaded
 		div(part='')
 			ul
 				li Update page title from view to view
 				li $.announce() "{new title} view loaded" on view loaded event
 				//li $.access() new content
-			a(href="http://localhost:3001/" target="_blank") Accessible Single-Page App →
+			a(href="http://patrickfox.github.io/" target="_blank") Accessible Single-Page App →
 			br
-			a(href="http://localhost:3001/#/blog/screen-reader-page-load-behaviors.html" target="_blank") Screen reader page load behaviors →
+			a(href="http://patrickfox.github.io/#/blog/screen-reader-page-load-behaviors.html" target="_blank") Screen reader page load behaviors →
 	a-slide
 		h3 Popup menus
 		h4 Emulate native select menu states, behaviors and keyboard nav
@@ -496,10 +500,10 @@ body(is='a-slide-deck', unresolved='')
 			div(flex='', part='') 
 				h4 Menu:
 				ul
-					li keyboard navigation: up/down/tab moves through menu options
+					li keyboard navigation: up/down moves through menu options
 					li ESC closes menu, place focus back on button
 					li Use #[code role=“menuitem”] on menu item buttons
-		a(href="http://patrickfox.github.io/blog/accessible-popup-menus.html" target="_blank") Popup Menu Example →
+		a(href="http://patrickfox.github.io/#/blog/accessible-popup-menus.html" target="_blank") Popup Menu Example →
 	//- a-slide
 	//- 	h3 Accordion Content - TODO
 	//- 	flex-line
@@ -547,9 +551,10 @@ body(is='a-slide-deck', unresolved='')
 			div(flex='', part='')
 				h4 On open:
 				ul
-					li focus on first focusable or dialog body
+					li focus on first focusable element
 					li isolate modal UI from view content
 					li dialog is announced
+					li listen for escape key to close
 		div(part='')
 			h4 On close:
 			ul
@@ -595,23 +600,22 @@ body(is='a-slide-deck', unresolved='')
 		ul
 			li on button focus/blur, tooltip opens/closes
 			li tooltip contents are read upon button interaction
-		a(href="http://localhost:3001/#/blog/accessible-tooltips.html" target="_blank") Tooltip demo →
-	//- a-slide
-	//- 	h3 Inline Form Validation
-	//- 	p Inline, dynamic errors are problematic
-	//- 	div(part='')
-	//- 		h4 Tips:
-	//- 		ul
-	//- 			li Leverage field label to report error messaging
-	//- 			li Use $.announce to speak errors
-	//- 			li Use ARIA to communicate states:
-	//- 				ul
-	//- 					li @aria-invalid, @aria-required
+		a(href="http://patrickfox.github.io//#/blog/accessible-tooltips.html" target="_blank") Tooltip demo →
+	a-slide
+		h3 Inline Form Validation
+		p Problem: Inline, dynamic errors not readily understood, communicated
+		div(part='')
+			h4 Tips:
+			ul
+				li Leverage field #[code label] to report error messaging
+				li Visual error is aria-hidden
+				li Place focus in first invalid field on submit
+				li Announce errors politely
+				li Use ARIA to communicate states:
+					ul
+						li #[code @aria-invalid, @aria-required]
 
-	//- 		a(href="" target="_blank") Form validation demo -&gt;
-	//- a-slide
-	//- 	h3 
-
+			a(href="https://citiretailservices.citibankonline.com/RSnextgen/svc/launch/index.action?siteId=PLCN_GOODYEAR&langId=en_US#signon" target="_blank") Form validation demo →
 
 	a-slide(data-state="intro")
 		h2 Deep Dive: Responsive Menus
@@ -633,16 +637,15 @@ body(is='a-slide-deck', unresolved='')
 				li 6 #[code tabindex="0"] on main content areas
 				li 4 #[code tabindex="-1"] on other areas
 		div(part='')
-			h4 Solution: #[a(href='') use $.access() to manage focus!]
+			h4 Solution: #[a(href='http://bit.ly/a11y_kit') use $.access() to manage focus!]
 
 	a-slide
 		h3 Starbucks.com
 		h4 Problem: Hidden menu items still navigable
 		ul
-			li CSS transitions used to animate menu open/close
-			li #[code aria-hidden] is problematic in VoiceOver
-			li #[code display:none;] should be used to hide menus when closed
-			li Timing is key: hide menus #[em after] CSS transition ends
+			li CSS transitions used to animate menu height
+			li Menu content is not visible but is still available
+			li Timing is key: add #[code display:none;] to menus #[em after] CSS transition ends
 
 	a-slide
 		h3 Starbucks.com
@@ -652,6 +655,42 @@ body(is='a-slide-deck', unresolved='')
 			li Set menu display #[code display:none;]
 			li #[strong Note:] removing CSS transitions will break menu toggle... 
 
+
+	a-slide(data-state="intro")
+		h2 Deep Dive: Summarizing Complex Content w/aria-labelledby
+	
+	a-slide
+		h3 Outlook Web Client
+		h4 Inbox UI
+		ul
+			li Email clients are complex
+			li Lots of meta data
+			li Potentially cumbersome to understand and navigate
+		a(href='https://mail.publicisgroupe.net/owa/#path=/mail' target="owa") aria-labelledby example: Outlook web client →
+
+	a-slide
+		h3 Outlook Web Client
+		h4 #[code aria-labelledby] to the rescue
+		ul
+			li Email messages are summarized succinctly
+			li #[code aria-labelledby] is used to curate a summary
+			li Use of descriptive helper text to provide additional meaning and clarity
+
+	a-slide
+		h3 Outlook Web Client
+		h4 Implementation could be better...
+		ul
+			li Separate set of content and elements increases DOM size
+			li DOM bloat could create performance issues
+			li Best option: use #[code aria-label] to create text summary
+
+	a-slide
+		h3 Outlook Web Client
+		h4 Summary
+		ul
+			li Use #[code aria-labelledby] to string together a message from visible content
+			li Use #[code aria-label] for a static messages that differs from visible content
+			li Above all: don't compromise web performance and code integrity for accessibility
 
 	a-slide(data-state="intro")
 		h2 Resources
@@ -699,8 +738,8 @@ body(is='a-slide-deck', unresolved='')
 			li Share what you learn! Contribute!
 	a-slide(data-state="intro")
 		h2 Questions, Comments?
-		p Feedback on this workshop: 
-			a(href="bit.ly/moderna11y_survey") bit.ly/moderna11y_survey
+		//- p Feedback on this workshop: 
+		//- 	a(href="bit.ly/moderna11y_survey") bit.ly/moderna11y_survey
 	a-slide(data-state="intro")
 		h2 Thanks!
 		p

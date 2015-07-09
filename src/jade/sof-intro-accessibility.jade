@@ -1,0 +1,728 @@
+doctype html(lang='en')
+head
+	meta(charset='utf-8')
+	title School of Fish - Intro to Accessibility
+	script(src='bower_components/webcomponentsjs/webcomponents.js')
+	link(rel='import', href='bower_components/slide-deck/a-slide-deck.html')
+	link(rel='import', href='bower_components/slide-deck/a-slide.html')
+	link(rel='import', href='bower_components/slide-deck/code-block.html')
+	link(rel='import', href='elements/flex-grid.html')
+	link(rel='import', href='elements/flex-line.html')
+	link(rel='stylesheet', href='css/theme.css')
+	-demo_base_url = "http://localhost:3001/"
+body(is='a-slide-deck', unresolved='')
+	div
+	a-slide.start
+		h1 Intro to Accessibility
+		h3(style='margin-top:-.4em; font-weight:400') School of Fish
+		p
+			p Patrick Fox, Technology Director, Austin
+			a(href='http://github.com/patrickfox', target='_blank') github.com/patrickfox
+			br
+			a(href='http://twitter.com/patrickfox', target='_blank') @patrickfox
+			br
+			a(href='http://twitter.com/razorfish', target='_blank') @razorfish
+	a-slide
+		h3 Agenda
+		ul
+			li Introduction 
+			li What is accessibility?
+			li Accessibility Standards
+			li ARIA
+			li Screen Readers and Browsers
+			li VoiceOver Navigation Demo
+			li Implementation - Core Accessibility
+			li Cheat Sheet	
+
+	a-slide(data-state="intro")
+		h2 Introduction
+
+	a-slide
+		h3 Terminology
+		flex-line
+			div(flex='')
+				ul
+					li(part='') #[strong a11y] = accessibility
+					li(part='') #[strong AT] = assistive technology
+					li(part='') #[strong Screen reader] = software that interprets code and reads content
+					li(part='') #[strong WAI-ARIA] = W3C technical spec, enables modern a11y
+					li(part='') #[strong WCAG2] = W3C a11y guidelines, v2
+			div(flex='')
+				ul
+					li(part='') #[strong Rehabilitation Act(1973), Section 508] = provides electronic a11y guidelines for US government vendors
+					li(part='') #[strong Americans w/Disabilities Act (ADA, 1990)] = law, prohibits discrimination
+
+	a-slide(data-state="intro")
+		h2 What is accessibility?
+
+	a-slide
+		h3 Accessibility is inclusivity
+		p Account for wider range of abilities:
+		ul
+			li(part='') #[strong Visual] Color blindness, partial or total blindness
+			li(part='') #[strong Aural] Sound communicated via text
+			li(part='') #[strong Physical] Limited or loss of limb use
+			li(part='') #[strong Cognitive] ADD/ADHD, dyslexia, learning disabilities
+
+	a-slide
+		h3 Accessibility is important
+		ul
+			li(part='') #[strong for our clients:] Legal, brand risks
+			li(part='') #[strong for Razorfish:] New business, value-add, trust
+			li(part='') #[strong A11y benefits everyone:]
+				ul
+					li independence, dignity
+					li temporary disabilities
+					li curb cuts, door openers
+			li(part='') #[strong A11y is an equality and civil rights issue]
+		div(part='')
+			blockquote 
+				em "When we work on making our devices accessible by the blind, I don't consider the bloody ROI".
+			cite - Tim Cook, Apple CEO
+
+	a-slide
+		h3 Accessibility requires awareness and empathy
+		ul
+			li(part='') #[strong Compliance vs. Usability] Not enough to be compliant
+			li(part='') #[strong Team effort:] Designers, IA's, copywriters, and developers
+			li(part='') Ensure that the structure and each component of your site/app is:
+				ul
+					li perceivable
+					li operable
+					li understandable
+					li robust
+		div(part='')
+			p
+				em "Accessibility is usability in context of disability"
+			p - Jan Eric Hellbusch, #[a(href="http://bit.ly/a11y-is-usability" target='a11yusability') bit.ly/a11y-is-usability ]
+		div(part='') 
+			p
+				em "Empathy encourages you to understand who uses your product, forces you ask deeper questions and motivates the many redesigns you go through to get a product right."
+			p - Scott Jensen, #[a(href="http://bit.ly/a11y-empathy" target='empathy') bit.ly/a11y-empathy ]
+
+	a-slide
+		h3 Accessibility Goals - POUR
+		p Users of varying abilities can #[strong percieve],  #[strong operate] and  #[strong understand] your UI
+		p Solutions are  #[strong robust] and can work across a spectrum of screen readers and browsers
+
+
+	a-slide
+		h3 Accessibility Goals
+		ul
+			li(part) Ensure device independence
+				ul
+					li site functionality operable via keyboard or mouse
+			li(part) Provide meaningful, logical content structure and order
+				ul
+					li semantic markup
+					li navigable and discoverable UI
+					li content flow matches visual flow
+					li screen readers can speak your UI
+			li(part) Provide equivalent content/experiences
+				ul
+					li visual cues/associations translate to spoken experience
+					li color contrast
+					li alternate text
+
+	a-slide(data-state="intro")
+		h2 Accessibility Standards
+
+	a-slide
+		h3 W3C WCAG2
+		ul
+			li(part) W3C, international standard
+			li(part) Levels of compliance: A, AA and AAA
+
+	a-slide
+		h3 WCAG2 - Percievable
+		p 1.1 Non-text Content
+		ul
+			li Add @alt to all image tags - <em>alt=""</em> is legit
+			li Ensure that all form inputs have text labels
+
+	a-slide
+		h3 WCAG2 - Percievable
+		p 1.2 Time-based Media: Provide alternatives for time-based media
+		ul
+			li Provide captions and transcripts for video
+
+	a-slide
+		h3 WCAG2 - Percievable
+		p 1.3 Adaptable: Create content that can be presented in different but equivalent ways 
+		ul
+			li Create a semantic structure that represents the purpose of the content<sup>*</sup>
+			li Create a logical heading hierarchy and tab order
+			li Use tables for tabular data only
+			li Associate text labels with form inputs
+			li Ensure logical and intuitive reading and navigation order(determined by code order)
+			li Ensure that instructions do not rely upon shape, size, color or visual location
+
+	a-slide
+		h3 WCAG2 - Percievable
+		p 1.4 Distinguishable: Make it easier for users to see and hear content including separating foreground from background
+		ul
+			li Provide text alternatives for color-based indicators
+			li Ensure accessible color contrast:
+				ul
+					li Small text(< 18pt): 4.5:1 contrast ratio
+					li Large text (>= 18pt): 3:1 contrast ratio
+	a-slide
+		h3 WCAG2 - Operable
+		p 2.1 Keyboard Accessible: Make all functionality available from a keyboard
+		ul
+			li Ensure keyboard access
+			li Emulate native keyboard navigation
+			li Use ARIA roles to define widgets, interactive elements	
+	a-slide
+		h3 WCAG2 - Operable
+		p 2.2 Enough Time: Provide users enough time to read and use content
+		ul
+			li Communicate and allow extension of time limits
+			li Allow user to control animating content(e.g. carousels)
+	a-slide
+		h3 WCAG2 - Operable
+		p  2.3 Seizures: Do not design content in a way that is known to cause seizures
+		ul
+			li Avoid flashing content(<=3 Hz)
+	a-slide
+		h3 WCAG2 - Operable
+		p 2.4 Navigable: Provide ways to help users navigate, find content, and determine where they are
+		ul
+			li Provide skip navigation
+			li Provide descriptive and informative page titles, headings, form labels, other controls
+			li Provide logical and intuitive focus/tab and heading order<sup>*</sup>
+			li Ensure that link/button(anything tabable) text stands on it own
+			li Ensure visual focus state
+			li Use ARIA landmark roles to identify various sections of the page
+	a-slide
+		h3 WCAG2 - Understandable
+		p 3.1 Readable: Make text content readable and understandable
+		ul
+			li Page language is identified
+			li Provide accessible instructions and contextual info via .visuallyhidden content
+	a-slide
+		h3 WCAG2 - Understandable
+		p 3.2 Predictable: Make Web pages appear and operate in predictable ways
+		ul
+			li Avoid changing context upon user focus or input
+			li Communicate significant status or content updates
+			li Reduce audible clutter by providing concise, non-repetitive content	
+			li Provide consistent navigation
+
+	a-slide
+		h3 WCAG2 - Understandable
+		p 3.3 Input Assistance: Help users avoid and correct mistakes
+		ul
+			li Provide accessible input requirements and form validation 
+			li Provide suggestions/help for errors 
+
+	a-slide
+		h3 Section 508
+		ul 
+			li(part) US standard
+			li(part) Changing soon to adopt WCAG2 standard
+			li(part) Roughly maps to WCAG2 Level A
+
+	a-slide
+		h3 Compliance vs. Usability
+		ul
+			li(part) Inclusivity and usability vs. specific wording of guidelines
+
+	a-slide
+		h2 WAI ARIA
+
+	a-slide
+		h3 Modern A11y Challenges
+		div(part)
+			p #[strong Dynamic UI:] content updates, state changes not communicated
+			ul
+				li Dynamic errors/notifications
+				li View updates in single-page apps
+		div(part)
+			p #[strong Custom UI:] role and purpose of non-native widgets not understood
+			ul
+				li Custom drop-down menus
+				li Modals
+				li Tooltips
+				li Accordion content
+
+	a-slide
+		h3 ARIA Powers Modern A11y
+		p ARIA specifies a set of attributes that allow us to set and communicate:
+		ul
+			li States: #[code aria-enabled], #[code aria-selected]
+			li Properties: #[code aria-haspopup]
+			li Roles and Landmarks: #[code role="dialog"], #[code role="contentinfo"]
+			li Relationships: #[code aria-labelledby], #[code aria-controls]
+			li Live Regions: #[code aria-live]
+
+	a-slide(data-state="intro")
+		h2 Screen Readers and Browsers
+
+	a-slide
+		h3 Page Navigation
+		p Two types of focus:
+		div(part) Browser focus
+			ul
+				li Natively focusable elements(input, links, buttons, etc.)
+				li Use tab key to navigate
+		div(part) Screen reader(virtual focus)
+			ul
+				li Navigate element-by-element
+				li Specific elements
+					ul
+						li Headings
+						li Landmarks
+						li Form elements
+						li Links, buttons
+				li Use arrow keys and modifiers to explore structure
+
+	a-slide
+		h3 Screen Reader Stats
+		flex-line
+			div(flex='', part='')
+				h4 Desktop
+				ul
+					li JAWS(Win) ~50%, mostly in US
+					li NVDA(Win) ~20%, higher in EU
+					li VoiceOver(MacOS) ~10%
+			div(flex='', part='')
+				h4 Mobile
+				ul
+					li VoiceOver(iOS) ~60%, higher in US
+					li Talkback(Android) ~20%
+		p(part) Source: #[a(href="http://webaim.org/projects/screenreadersurvey5/", target="webaim") WebAIM.org Screen Reader Survey 5]
+
+
+	a-slide
+		h3 Screen Reader Testing
+		ul
+			li(part) Test early and often!
+			li(part) Support for a11y features varies
+			li(part) Recommended Browser/Screen Reader Combos:
+				ul
+					li NVDA / Firefox (Windows)
+					li JAWS / IE (Windows)
+					li VoiceOver / Safari (MacOS/iOS)
+					li TalkBack / Firefox (Android)
+
+	a-slide(data-state="intro")
+		h2 VoiceOver Demos
+
+	a-slide
+		h3 MacOS Commands
+		ul 
+			li ⌘-F5 - Start/Stop VO
+			li Ctrl-Opt(VO)-U - Web Rotor
+			li Left-Up/Right-Up - Change Quick Nav rotor
+			li Left-Right - Quick Nav On/Off
+
+	a-slide
+		h3 iOS Commands
+		ul
+			li Triple-press home key - Start/Stop VO 
+			li Swipe right/left - move focus to next/previous element
+			li Swipe down/up - move focus to next/previous element types
+
+
+	a-slide(data-state="intro")
+		h2 Implementation - Core Accessibility
+
+	a-slide(data-state="intro")
+		h2 Headings
+	a-slide
+		h3 Importance
+		ul
+			li.fragment Headings and heading order are important to understanding page hierarchy
+			li.fragment AT allows users to navigate pages via headings
+	a-slide
+		h3 Usage
+		ul
+			li.fragment Use headings consistently from page to page
+			li.fragment Heading order must not increase by more than one
+		ul
+			li Good: h1, h2, h2, h3, h4, h2, h3
+			li Not good: h1, h2, h4, h4, h2, h5
+			li.fragment One H1 per page*(per Citi team)
+			li.fragment Modals should always start w/H1
+	a-slide
+		h3 Handle with care
+		ul
+			li.fragment Add headings to your UI only if they are part of a larger strategy
+		ul
+			li Don't add headings to the page randomly - follow the copy deck
+	a-slide(data-state='map')
+		h3 Landmarks
+		h4 Landmarks improve navigation and understanding of page structure
+		table(part='')
+			thead
+				tr
+					th Role
+					th HTML Tag
+					th Usage
+					th Notes
+			tbody
+				tr.hl
+					td banner
+					td #[code &lt;header role="banner"&gt; ]
+					td once per view
+					td Page header
+				tr.hl
+					td main
+					td #[code &lt;main role="main"&gt; ]
+					td once per view
+					td Main content area
+				tr.hl
+					td contentinfo
+					td #[code &lt;footer role="contentinfo"&gt; ]
+					td once per view
+					td Page footer
+				tr
+					td search
+					td -
+					td multiple
+					td Search form
+				tr
+					td form
+					td -
+					td multiple
+					td Don't use unless a form plays a significant role in page
+				tr
+					td navigation
+					td #[code &lt;nav role="navigation"&gt; ]
+					td multiple
+					td Use with label/heading
+				tr
+					td complementary
+					td #[code &lt;aside role="complementary"&gt; ]
+					td multiple
+					td Use with label/heading
+				tr
+					td application
+					td -
+					td !avoid
+					td
+
+	a-slide(data-state='map')
+		h3 Landmark Usage
+		h4 At a minimum, all pages should have:
+		ul(part='')
+			li banner  - #[code &lt;header role="banner"&gt; ]
+			li main - #[code &lt;main role="main"&gt; ]
+			li contentinfo - #[code &lt;footer role="contentinfo"&gt; ]
+		p(part='') #[strong Goal:] ensure that all content resides in a landmark region and, in doing so, no content is orphaned 
+
+	a-slide(data-state='map')
+		h3 Landmark Tips
+		h4 
+		ul
+			li(part='') Create a landmark strategy, use it consistently
+			li(part='') Use labels for generic landmarks (e.g. navigation, complementary)
+			li(part='') Some HTML5 sectioning elements are landmarks by default
+			li(part='') Use HTML5 element <em>and</em> role
+			li(part='') Don't overuse
+		code-block(language="html")
+			| 
+			|          # examples
+			|		<section role="complementary" aria-labelledby="module_heading">
+			|			<h2 id="module_heading">Frequently Asked Questions</h2>
+			|		</section>
+			|		<header role="banner"></header>
+			|		<footer role="presentation"></footer>
+			|		<main role="main"></main>
+			| 
+
+	a-slide
+		h2 Tables
+	a-slide
+		h3 Table Headings
+		ul
+			li TD's must be associated with any row or column headings via proper use of TH.
+			li TH's are used by screen readers to label each TD
+			li Use the #[code scope] attribute to denote that a header applies to the entire row or column
+	a-slide
+		h3 Column Heading
+		ul
+			li Use table headings(#[code &lt;th&gt;]) to label rows and columns
+		code-block(language="html")
+			| 
+			|	&lt;table&gt;
+			|	  &lt;tr&gt;
+			|	    &lt;th&gt;Date&lt;/th&gt;
+			|	    &lt;th&gt;Event&lt;/th&gt;
+			|	    &lt;th&gt;Venue&lt;/th&gt;
+			|	  &lt;/tr&gt;
+			|	  &lt;tr&gt;
+			|	    &lt;td&gt;12 February&lt;/td&gt;
+			|	    &lt;td&gt;Waltz with Strauss&lt;/td&gt;
+			|	    &lt;td&gt;Main Hall&lt;/td&gt;
+			|	  &lt;/tr&gt;
+			|	&lt;/table&gt;
+			| 
+
+		table
+			thead
+				tr
+					th Date
+					th Event
+					th Venue
+			tbody
+				tr
+					td 12 February
+					td Waltz with Strauss
+					td Main Hall
+				tr
+					td 13 February
+					td Waltz with Strauss
+					td Main Hall
+				tr
+					td 14 February
+					td Waltz with Strauss
+					td Main Hall
+				tr
+					td 15 February
+					td Waltz with Strauss
+					td Main Hall
+	a-slide
+		h3 Column and Row Headings
+		ul
+			li Use table headings(#[code &lt;th scope="row|col"&gt;]) to label rows and columns
+		code-block(language="html")
+			| 
+			|	&lt;table&gt;
+			|	  &lt;caption&gt;Delivery slots:&lt;/caption&gt;
+			|	  &lt;tr&gt;
+			|	    &lt;td&gt;&lt;/td&gt;
+			|	    &lt;th scope="col"&gt;Monday&lt;/th&gt;
+			|	    &lt;th scope="col"&gt;Tuesday&lt;/th&gt;
+			|	    &lt;th scope="col"&gt;Wednesday&lt;/th&gt;
+			|	  &lt;/tr&gt;
+			|	  &lt;tr&gt;
+			|	    &lt;th scope="row"&gt;09:00 - 11:00&lt;/th&gt;
+			|	    &lt;td&gt;Closed&lt;/td&gt;
+			|	    &lt;td&gt;Open&lt;/td&gt;
+			|	    &lt;td&gt;Open&lt;/td&gt;
+			|	  &lt;/tr&gt;
+			|	  ...
+			|	&lt;/table&gt;
+			| 
+
+		table
+			thead
+				tr
+					td 
+					th(scope='col') Mon
+					th(scope='col') Tues
+					th(scope='col') Wed
+					th(scope='col') Thurs
+					th(scope='col') Fri
+					th(scope='col') Sat
+					th(scope='col') Sun
+			tbody
+				tr
+					th(scope='row') 09:00 - 11:00
+					td Closed
+					td Open
+					td Open
+					td Closed
+					td Open
+					td Closed
+					td Open
+				tr
+					th 11:00 - 1:00
+					td Open
+					td Closed
+					td Open
+					td Closed
+					td Closed
+					td Closed
+					td Open
+				tr
+					th 1:00 - 3:00
+					td Open
+					td Open
+					td Closed
+					td Closed
+					td Closed
+					td Closed
+					td Open
+	a-slide
+		h2 Forms
+	a-slide
+		h3 Labeling
+		p All form inputs must have a label(e.g. #[code &lt;label&gt;])
+		code-block(language="html")
+			| 
+			|	&lt;div&gt;
+			|	  &lt;label for="url"&gt;Website: &lt;/label&gt;
+			|	  &lt;input type="url" name="url" id="url"&gt;
+			|	&lt;/div&gt;
+			|	
+			|	&lt;div&gt;
+			|	  &lt;input aria-label="Zip Code" type="text" name="zip" id="zip"&gt;
+			|	&lt;/div&gt;
+			| 
+	a-slide
+		h3 Grouping
+		p Associated form controls should be grouped using #[code &lt;fieldset&gt;] and #[code &lt;legend&gt;]
+		code-block(language="html")
+			| 
+			|	&lt;fieldset&gt;
+			|	  &lt;legend&gt;Output format&lt;/legend&gt;
+			|	  &lt;div&gt;
+			|	    &lt;input type="radio" name="format" id="txt" value="txt" checked&gt;
+			|	    &lt;label for="txt"&gt;Text file&lt;/label&gt;
+			|	  &lt;/div&gt;
+			|	  &lt;div&gt;
+			|	    &lt;input type="radio" name="format" id="csv" value="csv"&gt;
+			|	    &lt;label for="csv"&gt;CSV file&lt;/label&gt;
+			|	  &lt;/div&gt;
+			|	&lt;/fieldset&gt;
+			| 
+		form(method='post', action='#')
+			fieldset
+				legend Output format
+				div
+					input#txt(type='radio', name='format', value='txt', checked='')
+					label(for='txt') Text file
+				div
+					input#csv(type='radio', name='format', value='csv')
+					label(for='csv') CSV file
+				div
+					input#html(type='radio', name='format', value='HTML')
+					label(for='html') HTML file
+
+	a-slide(data-state="intro")
+		h2 Alternate Text
+
+	a-slide
+		h3 Use Cases
+		ul
+			li Translating visual content to spoken content
+			li Provide additional information for interactive elements:
+				ul
+					li links
+					li buttons
+					li form elements
+
+	a-slide
+		h3 Images
+		ul
+			li #[code &lt;img&gt;] always requires #[code alt] attribute
+			li Alt text speaks for image content
+			li Non-essential images should have #[code alt=""]
+
+	a-slide
+		h3 Labeling Techniques
+		ul
+			li #[code aria-label="{label text}"] - 
+			li #[code aria-labelledby="{id list}"] - use other element(s) as label
+			li #[code aria-describedby="{id list}"] - use other element(s) as description
+			li #[code .visuallyhidden] - CSS technique, visually hides content, available to screen reader
+
+	a-slide(data-state="intro")
+		h2 Focus Management
+	a-slide
+		h3 What is focus management?
+		p Care and management of where focus is
+		div(part)
+			h4 Placing focus on an element:
+			ul
+				li speaks the contents of that element
+				li reads associated label text - #[code aria-label], #[code aria-labelledby]
+				li moves keyboard focus where we want it to be
+		div(part)
+			h4 Tips:
+			ul
+				li don't move keyboard focus unless necessary
+				li take care not to lose keyboard focus
+				li placing focus can help communicate context changes
+	a-slide(data-state="intro")
+		h2 Modals
+	a-slide
+		h3 Modal Goals
+		ul
+			li Focus and maintain user's attention on modal UI
+			li Prevent interaction with background content
+				ul
+					li Tabbing
+					li Screen reader virtual navigation
+	a-slide
+		h3 Modal Setup
+		code-block(language='html')
+			| 
+			|	&lt;div role="dialog" aria-labelledby="label" aria-describedby="description"&gt;
+			|	  &lt;h1 id="label"&gt;Account Alert: Account Overdrawn&lt;/h1&gt;
+			|	  &lt;p id="description"&gt;Your account ending in 4567 has a negative balance of -$15.76&lt;/p&gt;
+			|	  &lt;button&gt;Transfer Funds&lt;/button&gt;
+			|	  &lt;button&gt;Remind Me Later&lt;/button&gt;
+			|	&lt;/div&gt;
+			| 
+		ul
+			li(part) Start heading order with H1
+			li(part) #[code role="dialog"] announces "dialog"
+			li(part) #[code aria-labelledby="label"] announces #label
+			li(part) #[code aria-describedby="description"] announces #description
+		p(part) End result: "Account Overdrawn dialog Your account ending in 4567 has a negative balance of -$15.76, Transfer Funds button"
+	//- a-slide
+	//- 	h3 Fusion
+	//- 	p @aria-labelledby and @aria-describedby are dynamically assigned using the following @data:
+	//- 	ul
+	//- 		li @data-popup-label: add this to the element that you want to be the label
+	//- 		li @data-popup-description: add this to the element that you want to be the description
+
+	a-slide
+		h3 Modal Open
+		ul
+			li Focus on first focusable or dialog body
+			li Isolate modal UI from view content(#[code aria-hidden])
+			li Dialog is announced
+	a-slide
+		h3 Modal Close
+		ul
+			li Return focus to initiating button, last focused or main content
+			li Reset everything
+	a-slide
+		h3 Modal Isolation Detail
+		code-block(language="html")
+			| 
+			|	<body>
+			|	  <div data-isolate class="shell" aria-hidden="true">
+			|	    #all main page content lives here
+			|	  </div>
+			|	    #modals live at body end, hidden until activated
+			|	  <section data-modal-id="test_modal" role="dialog">...</section>
+			|	</body>
+			| 
+
+		ul
+			li(part='') Main content lives in one element - #[code div(data-isolate)]
+			li(part='') Hide page content from screen reader - #[code aria-hidden=true]
+			li(part='') Focus listener returns page focus to modal
+
+
+	a-slide(data-state="intro")
+		h2 Modern A11y Goals and Tips
+		flex-line
+			div(flex='')
+				ul
+					li(part='') Create lean, elegant, robust technical solutions
+					li(part='') Minimize use of ARIA - rely on semantic code first
+					li(part='') Aim for widest screen reader/browser support possible
+					li(part='') Test often - don't wait until the end
+					li(part='') Developers and QA peeps should be screen reader experts
+			div(flex='')
+				ul
+					li(part='') Make a11y a core part of every step of project lifecycle
+					li(part='') Accessibility is a team effort
+					li(part='') Make accessibility easier, repeatable
+					li(part='') Be wary of "accessible" frameworks - test for yourself, improve
+					li(part='') Give back - share what you know, report issues
+	a-slide(data-state="intro")
+		h2 Thanks!
+	footer(role="contentinfo")
+		span 
+			a(href="/") Home
+
+
+

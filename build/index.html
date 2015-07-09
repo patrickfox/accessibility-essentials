@@ -1,7 +1,7 @@
 <!DOCTYPE html(lang='en')>
 <head>
   <meta charset="utf-8"/>
-  <title>Modern Web A11y Workshop - SXSW Interactive 2015</title>
+  <title>Modern Web A11y Workshop - John Slatin Access U 2015</title>
   <script src="bower_components/webcomponentsjs/webcomponents.js"></script>
   <link rel="import" href="bower_components/slide-deck/a-slide-deck.html"/>
   <link rel="import" href="bower_components/slide-deck/a-slide.html"/>
@@ -14,7 +14,7 @@
   <div></div>
   <a-slide class="start">
     <h1>Modern Web A11y Workshop</h1>
-    <h3 style="margin-top:-.4em; font-weight:400">SXSW Interactive 2015</h3>
+    <h3 style="margin-top:-.4em; font-weight:400">John Slatin Access U 2015</h3>
     <p>
       <p>Patrick Fox</p><a href="http://github.com/patrickfox" target="_blank">github.com/patrickfox</a><br/><a href="http://twitter.com/patrickfox" target="_blank">@patrickfox</a><br/><a href="http://twitter.com/razorfish" target="_blank">@razorfish</a><br/><a href="http://twitter.com/search?q=%23moderna11y" target="_blank">#moderna11y</a>
     </p>
@@ -25,16 +25,17 @@
   <a-slide>
     <h3>Overview</h3>
     <ul>
-      <li part="">Introduction - 3:30pm (15 min)</li>
-      <li part="">Tools and Techniques - 3:45pm (1 hr)
+      <li>Introduction - 8:30 am (15 min)</li>
+      <li>Tools and Techniques - 8:45 am (1 hr)
       </li>
-      <li part="">Implementing Accessibility - 4:45 pm (45 min)
+      <li>Quick Break - 9:45 am (15 min)</li>
+      <li>Implementing Accessibility - 10:00 am (90 min)
       </li>
-      <li part="">Deep Dive: Responsive Menus - 5:30 pm (15 min)</li>
+      <li>Deep Dive: Responsive Menus - 11:30 am (15 min)</li>
     </ul>
   </a-slide>
   <a-slide>
-    <h3>What is this workshop about?</h3>
+    <h3>So, what is this workshop about?</h3>
     <ul>
       <li part="">Modern accessibility challenges and solutions</li>
       <li part="">Design and technical considerations and best practices</li>
@@ -89,11 +90,11 @@
     </ul>
     <div part=""> 
       <p><em>"Accessibility is usability in context of disability"</em></p>
-      <p>- Jan Eric Hellbusch, <a href="http://bit.ly/a11y-is-usability">bit.ly/accessibility-is-usability </a></p>
+      <p>- Jan Eric Hellbusch, <a href="http://bit.ly/a11y-is-usability" target="a11yusability">bit.ly/a11y-is-usability </a></p>
     </div>
     <div part=""> 
       <p><em>"Empathy encourages you to understand who uses your product, forces you ask deeper questions and motivates the many redesigns you go through to get a product right."</em></p>
-      <p>- Scott Jensen, <a href="http://bit.ly/a11y-empathy">bit.ly/a11y-empathy </a></p>
+      <p>- Scott Jensen, <a href="http://bit.ly/a11y-empathy" target="empathy">bit.ly/a11y-empathy </a></p>
     </div>
   </a-slide>
   <a-slide>
@@ -198,13 +199,13 @@
       <li part="">Manage focus only to improve understanding, avoid frustration</li>
       <li part="">Focusing on an element reads its contents or label</li>
       <li part="">Only natively focusable elements or elements w/<code>tabindex</code> can receive focus</li>
-    </ul>
+    </ul><a part="" href="http://americanexpress.com/" target="tabnidex">Tabindex Anti-pattern Example →</a>
   </a-slide>
   <a-slide>
     <h3>Using Tabindex</h3>
     <p part="">Tips:
       <li part="">Hard coding <code>tabindex</code> can be problematic</li>
-      <li part=""><strong>Do not use</strong> <code>tabindex="0"</code></li>
+      <li part=""><strong>Do not use</strong> <code>tabindex="{&gt;=0}"</code></li>
       <li part="" class="strong">Use a script to dynamically manage focus&hellip;</li>
     </p>
   </a-slide>
@@ -214,7 +215,7 @@
     <ul>
       <li part="">Adds <code>tabindex="-1"</code></li>
       <li part="">Places focus on the target element</li>
-      <li part="">Listens for <code>focusout</code> event and cleans up everything</li>
+      <li part="">On <code>focusout</code>, tabindex and event listeners are removed</li>
     </ul>
   </a-slide>
   <a-slide data-state="#access">
@@ -342,12 +343,14 @@
     <code-block language="html">
        
       		<button aria-label="Edit email">Edit</button>
-               #label an element using another element's copy
-      		&lt;div aria-labelledby="some_id another_id third_id"> 
-               #additional descriptive content
-      		&lt;input id="first_name" aria-describedby="visual_descriptive_text" type="text" /> 
+              #label an element using another element's copy
+      		&lt;div aria-labelledby="some_id another_id third_id">
+              #additional descriptive content
+      		&lt;label for="first_name">First Name&lt;/label>
+      		&lt;input id="first_name" aria-describedby="visual_descriptive_text" type="text" />
+      		&lt;span>Please provide your full legal first name&lt;/span>
        
-    </code-block><a href="">aria-labelledby example →</a>
+    </code-block>
   </a-slide>
   <a-slide>
     <h3>Responsive Design Considerations</h3>
@@ -355,7 +358,7 @@
     <ul>
       <li part="">Avoid overly complex UI changes - keep content flow the same</li>
       <li part="">Touch gestures require accessible equivalent</li>
-      <li part="">Manage state and functionality changes w/JS - <a href="" target="hamburger">Hamburger Menu →</a></li>
+      <li part="">Manage state and functionality changes w/JS (e.g. CSS transitions)</li>
       <li part="">Minimize swipes on mobile - simplify and use semantic markup</li>
       <li part=""><code>aria-hidden="false"</code> breaks iOS VO</li>
       <li part="">Test each break point&hellip;</li>
@@ -533,13 +536,13 @@
     <h3 class="jsmvc">Single Page Architecture</h3>
     <h4>Intial page load, subsequent dynamic view updates via Ajax</h4>
     <p part=""><strong>Problem:</strong> No page refresh - screen reader unaware of view updates</p>
-    <p part=""><strong>Solution:</strong> $.announce() status updates on view loaded</p>
+    <p part=""><strong>Solution:</strong> Emulate native refresh, $.announce() status updates on view loaded</p>
     <div part="">
       <ul>
         <li>Update page title from view to view</li>
         <li>$.announce() "{new title} view loaded" on view loaded event</li>
         <!--li $.access() new content-->
-      </ul><a href="http://localhost:3001/" target="_blank">Accessible Single-Page App →</a><br/><a href="http://localhost:3001/#/blog/screen-reader-page-load-behaviors.html" target="_blank">Screen reader page load behaviors →</a>
+      </ul><a href="http://patrickfox.github.io/" target="_blank">Accessible Single-Page App →</a><br/><a href="http://patrickfox.github.io/#/blog/screen-reader-page-load-behaviors.html" target="_blank">Screen reader page load behaviors →</a>
     </div>
   </a-slide>
   <a-slide>
@@ -557,12 +560,12 @@
       <div flex="" part=""> 
         <h4>Menu:</h4>
         <ul>
-          <li>keyboard navigation: up/down/tab moves through menu options</li>
+          <li>keyboard navigation: up/down moves through menu options</li>
           <li>ESC closes menu, place focus back on button</li>
           <li>Use <code>role=“menuitem”</code> on menu item buttons</li>
         </ul>
       </div>
-    </flex-line><a href="http://patrickfox.github.io/blog/accessible-popup-menus.html" target="_blank">Popup Menu Example →</a>
+    </flex-line><a href="http://patrickfox.github.io/#/blog/accessible-popup-menus.html" target="_blank">Popup Menu Example →</a>
   </a-slide>
   <a-slide>
     <h3>Modals</h3>
@@ -587,9 +590,10 @@
       <div flex="" part="">
         <h4>On open:</h4>
         <ul>
-          <li>focus on first focusable or dialog body</li>
+          <li>focus on first focusable element</li>
           <li>isolate modal UI from view content</li>
           <li>dialog is announced</li>
+          <li>listen for escape key to close</li>
         </ul>
       </div>
     </flex-line>
@@ -645,9 +649,26 @@
     <ul>
       <li>on button focus/blur, tooltip opens/closes</li>
       <li>tooltip contents are read upon button interaction</li>
-    </ul><a href="http://localhost:3001/#/blog/accessible-tooltips.html" target="_blank">Tooltip demo →</a>
+    </ul><a href="http://patrickfox.github.io//#/blog/accessible-tooltips.html" target="_blank">Tooltip demo →</a>
   </a-slide>
-  
+  <a-slide>
+    <h3>Inline Form Validation</h3>
+    <p>Problem: Inline, dynamic errors not readily understood, communicated</p>
+    <div part="">
+      <h4>Tips:</h4>
+      <ul>
+        <li>Leverage field <code>label</code> to report error messaging</li>
+        <li>Visual error is aria-hidden</li>
+        <li>Place focus in first invalid field on submit</li>
+        <li>Announce errors politely</li>
+        <li>Use ARIA to communicate states:
+          <ul>
+            <li><code>@aria-invalid, @aria-required</code></li>
+          </ul>
+        </li>
+      </ul><a href="https://citiretailservices.citibankonline.com/RSnextgen/svc/launch/index.action?siteId=PLCN_GOODYEAR&amp;langId=en_US#signon" target="_blank">Form validation demo →</a>
+    </div>
+  </a-slide>
   <a-slide data-state="intro">
     <h2>Deep Dive: Responsive Menus</h2>
   </a-slide>
@@ -670,17 +691,16 @@
       </ul>
     </div>
     <div part="">
-      <h4>Solution: <a href="">use $.access() to manage focus!</a></h4>
+      <h4>Solution: <a href="http://bit.ly/a11y_kit">use $.access() to manage focus!</a></h4>
     </div>
   </a-slide>
   <a-slide>
     <h3>Starbucks.com</h3>
     <h4>Problem: Hidden menu items still navigable</h4>
     <ul>
-      <li>CSS transitions used to animate menu open/close</li>
-      <li><code>aria-hidden</code> is problematic in VoiceOver</li>
-      <li><code>display:none;</code> should be used to hide menus when closed</li>
-      <li>Timing is key: hide menus <em>after</em> CSS transition ends</li>
+      <li>CSS transitions used to animate menu height</li>
+      <li>Menu content is not visible but is still available</li>
+      <li>Timing is key: add <code>display:none;</code> to menus <em>after</em> CSS transition ends</li>
     </ul>
   </a-slide>
   <a-slide>
@@ -690,6 +710,45 @@
       <li>Event fires on end of CSS transition</li>
       <li>Set menu display <code>display:none;</code></li>
       <li><strong>Note:</strong> removing CSS transitions will break menu toggle... </li>
+    </ul>
+  </a-slide>
+  <a-slide data-state="intro">
+    <h2>Deep Dive: Summarizing Complex Content w/aria-labelledby</h2>
+  </a-slide>
+  <a-slide>
+    <h3>Outlook Web Client</h3>
+    <h4>Inbox UI</h4>
+    <ul>
+      <li>Email clients are complex</li>
+      <li>Lots of meta data</li>
+      <li>Potentially cumbersome to understand and navigate</li>
+    </ul><a href="https://mail.publicisgroupe.net/owa/#path=/mail" target="owa">aria-labelledby example: Outlook web client →</a>
+  </a-slide>
+  <a-slide>
+    <h3>Outlook Web Client</h3>
+    <h4><code>aria-labelledby</code> to the rescue</h4>
+    <ul>
+      <li>Email messages are summarized succinctly</li>
+      <li><code>aria-labelledby</code> is used to curate a summary</li>
+      <li>Use of descriptive helper text to provide additional meaning and clarity</li>
+    </ul>
+  </a-slide>
+  <a-slide>
+    <h3>Outlook Web Client</h3>
+    <h4>Implementation could be better...</h4>
+    <ul>
+      <li>Separate set of content and elements increases DOM size</li>
+      <li>DOM bloat could create performance issues</li>
+      <li>Best option: use <code>aria-label</code> to create text summary</li>
+    </ul>
+  </a-slide>
+  <a-slide>
+    <h3>Outlook Web Client</h3>
+    <h4>Summary</h4>
+    <ul>
+      <li>Use <code>aria-labelledby</code> to string together a message from visible content</li>
+      <li>Use <code>aria-label</code> for a static messages that differs from visible content</li>
+      <li>Above all: don't compromise web performance and code integrity for accessibility</li>
     </ul>
   </a-slide>
   <a-slide data-state="intro">
@@ -749,7 +808,6 @@
   </a-slide>
   <a-slide data-state="intro">
     <h2>Questions, Comments?</h2>
-    <p>Feedback on this workshop: <a href="bit.ly/moderna11y_survey">bit.ly/moderna11y_survey</a></p>
   </a-slide>
   <a-slide data-state="intro">
     <h2>Thanks!</h2>

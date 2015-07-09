@@ -1,0 +1,859 @@
+<!DOCTYPE html(lang='en')>
+<head>
+  <meta charset="utf-8"/>
+  <title>School of Fish - Intro to Accessibility</title>
+  <script src="bower_components/webcomponentsjs/webcomponents.js"></script>
+  <link rel="import" href="bower_components/slide-deck/a-slide-deck.html"/>
+  <link rel="import" href="bower_components/slide-deck/a-slide.html"/>
+  <link rel="import" href="bower_components/slide-deck/code-block.html"/>
+  <link rel="import" href="elements/flex-grid.html"/>
+  <link rel="import" href="elements/flex-line.html"/>
+  <link rel="stylesheet" href="css/theme.css"/>
+</head>
+<body is="a-slide-deck" unresolved="">
+  <div></div>
+  <a-slide class="start">
+    <h1>Intro to Accessibility</h1>
+    <h3 style="margin-top:-.4em; font-weight:400">School of Fish</h3>
+    <p>
+      <p>Patrick Fox, Technology Director, Austin</p><a href="http://github.com/patrickfox" target="_blank">github.com/patrickfox</a><br/><a href="http://twitter.com/patrickfox" target="_blank">@patrickfox</a><br/><a href="http://twitter.com/razorfish" target="_blank">@razorfish</a>
+    </p>
+  </a-slide>
+  <a-slide>
+    <h3>Agenda</h3>
+    <ul>
+      <li>Introduction </li>
+      <li>What is accessibility?</li>
+      <li>Accessibility Standards</li>
+      <li>ARIA</li>
+      <li>Screen Readers and Browsers</li>
+      <li>VoiceOver Navigation Demo</li>
+      <li>Implementation - Core Accessibility</li>
+      <li>Cheat Sheet	</li>
+    </ul>
+  </a-slide>
+  <a-slide data-state="intro">
+    <h2>Introduction</h2>
+  </a-slide>
+  <a-slide>
+    <h3>Terminology</h3>
+    <flex-line>
+      <div flex="">
+        <ul>
+          <li part=""><strong>a11y</strong> = accessibility</li>
+          <li part=""><strong>AT</strong> = assistive technology</li>
+          <li part=""><strong>Screen reader</strong> = software that interprets code and reads content</li>
+          <li part=""><strong>WAI-ARIA</strong> = W3C technical spec, enables modern a11y</li>
+          <li part=""><strong>WCAG2</strong> = W3C a11y guidelines, v2</li>
+        </ul>
+      </div>
+      <div flex="">
+        <ul>
+          <li part=""><strong>Rehabilitation Act(1973), Section 508</strong> = provides electronic a11y guidelines for US government vendors</li>
+          <li part=""><strong>Americans w/Disabilities Act (ADA, 1990)</strong> = law, prohibits discrimination</li>
+        </ul>
+      </div>
+    </flex-line>
+  </a-slide>
+  <a-slide data-state="intro">
+    <h2>What is accessibility?</h2>
+  </a-slide>
+  <a-slide>
+    <h3>Accessibility is inclusivity</h3>
+    <p>Account for wider range of abilities:</p>
+    <ul>
+      <li part=""><strong>Visual</strong> Color blindness, partial or total blindness</li>
+      <li part=""><strong>Aural</strong> Sound communicated via text</li>
+      <li part=""><strong>Physical</strong> Limited or loss of limb use</li>
+      <li part=""><strong>Cognitive</strong> ADD/ADHD, dyslexia, learning disabilities</li>
+    </ul>
+  </a-slide>
+  <a-slide>
+    <h3>Accessibility is important</h3>
+    <ul>
+      <li part=""><strong>for our clients:</strong> Legal, brand risks</li>
+      <li part=""><strong>for Razorfish:</strong> New business, value-add, trust</li>
+      <li part=""><strong>A11y benefits everyone:</strong>
+        <ul>
+          <li>independence, dignity</li>
+          <li>temporary disabilities</li>
+          <li>curb cuts, door openers</li>
+        </ul>
+      </li>
+      <li part=""><strong>A11y is an equality and civil rights issue</strong></li>
+    </ul>
+    <div part="">
+      <blockquote> <em>"When we work on making our devices accessible by the blind, I don't consider the bloody ROI".</em></blockquote>
+      <cite>- Tim Cook, Apple CEO</cite>
+    </div>
+  </a-slide>
+  <a-slide>
+    <h3>Accessibility requires awareness and empathy</h3>
+    <ul>
+      <li part=""><strong>Compliance vs. Usability</strong> Not enough to be compliant</li>
+      <li part=""><strong>Team effort:</strong> Designers, IA's, copywriters, and developers</li>
+      <li part="">Ensure that the structure and each component of your site/app is:
+        <ul>
+          <li>perceivable</li>
+          <li>operable</li>
+          <li>understandable</li>
+          <li>robust</li>
+        </ul>
+      </li>
+    </ul>
+    <div part="">
+      <p><em>"Accessibility is usability in context of disability"</em></p>
+      <p>- Jan Eric Hellbusch, <a href="http://bit.ly/a11y-is-usability" target="a11yusability">bit.ly/a11y-is-usability </a></p>
+    </div>
+    <div part=""> 
+      <p><em>"Empathy encourages you to understand who uses your product, forces you ask deeper questions and motivates the many redesigns you go through to get a product right."</em></p>
+      <p>- Scott Jensen, <a href="http://bit.ly/a11y-empathy" target="empathy">bit.ly/a11y-empathy </a></p>
+    </div>
+  </a-slide>
+  <a-slide>
+    <h3>Accessibility Goals - POUR</h3>
+    <p>Users of varying abilities can <strong>percieve</strong>,  <strong>operate</strong> and  <strong>understand</strong> your UI</p>
+    <p>Solutions are  <strong>robust</strong> and can work across a spectrum of screen readers and browsers</p>
+  </a-slide>
+  <a-slide>
+    <h3>Accessibility Goals</h3>
+    <ul>
+      <li part="part">Ensure device independence
+        <ul>
+          <li>site functionality operable via keyboard or mouse</li>
+        </ul>
+      </li>
+      <li part="part">Provide meaningful, logical content structure and order
+        <ul>
+          <li>semantic markup</li>
+          <li>navigable and discoverable UI</li>
+          <li>content flow matches visual flow</li>
+          <li>screen readers can speak your UI</li>
+        </ul>
+      </li>
+      <li part="part">Provide equivalent content/experiences
+        <ul>
+          <li>visual cues/associations translate to spoken experience</li>
+          <li>color contrast</li>
+          <li>alternate text</li>
+        </ul>
+      </li>
+    </ul>
+  </a-slide>
+  <a-slide data-state="intro">
+    <h2>Accessibility Standards</h2>
+  </a-slide>
+  <a-slide>
+    <h3>W3C WCAG2</h3>
+    <ul>
+      <li part="part">W3C, international standard</li>
+      <li part="part">Levels of compliance: A, AA and AAA</li>
+    </ul>
+  </a-slide>
+  <a-slide>
+    <h3>WCAG2 - Percievable</h3>
+    <p>1.1 Non-text Content</p>
+    <ul>
+      <li>Add @alt to all image tags - <em>alt=""</em> is legit</li>
+      <li>Ensure that all form inputs have text labels</li>
+    </ul>
+  </a-slide>
+  <a-slide>
+    <h3>WCAG2 - Percievable</h3>
+    <p>1.2 Time-based Media: Provide alternatives for time-based media</p>
+    <ul>
+      <li>Provide captions and transcripts for video</li>
+    </ul>
+  </a-slide>
+  <a-slide>
+    <h3>WCAG2 - Percievable</h3>
+    <p>1.3 Adaptable: Create content that can be presented in different but equivalent ways </p>
+    <ul>
+      <li>Create a semantic structure that represents the purpose of the content<sup>*</sup></li>
+      <li>Create a logical heading hierarchy and tab order</li>
+      <li>Use tables for tabular data only</li>
+      <li>Associate text labels with form inputs</li>
+      <li>Ensure logical and intuitive reading and navigation order(determined by code order)</li>
+      <li>Ensure that instructions do not rely upon shape, size, color or visual location</li>
+    </ul>
+  </a-slide>
+  <a-slide>
+    <h3>WCAG2 - Percievable</h3>
+    <p>1.4 Distinguishable: Make it easier for users to see and hear content including separating foreground from background</p>
+    <ul>
+      <li>Provide text alternatives for color-based indicators</li>
+      <li>Ensure accessible color contrast:
+        <ul>
+          <li>Small text(< 18pt): 4.5:1 contrast ratio</li>
+          <li>Large text (>= 18pt): 3:1 contrast ratio</li>
+        </ul>
+      </li>
+    </ul>
+  </a-slide>
+  <a-slide>
+    <h3>WCAG2 - Operable</h3>
+    <p>2.1 Keyboard Accessible: Make all functionality available from a keyboard</p>
+    <ul>
+      <li>Ensure keyboard access</li>
+      <li>Emulate native keyboard navigation</li>
+      <li>Use ARIA roles to define widgets, interactive elements	</li>
+    </ul>
+  </a-slide>
+  <a-slide>
+    <h3>WCAG2 - Operable</h3>
+    <p>2.2 Enough Time: Provide users enough time to read and use content</p>
+    <ul>
+      <li>Communicate and allow extension of time limits</li>
+      <li>Allow user to control animating content(e.g. carousels)</li>
+    </ul>
+  </a-slide>
+  <a-slide>
+    <h3>WCAG2 - Operable</h3>
+    <p> 2.3 Seizures: Do not design content in a way that is known to cause seizures</p>
+    <ul>
+      <li>Avoid flashing content(<=3 Hz)</li>
+    </ul>
+  </a-slide>
+  <a-slide>
+    <h3>WCAG2 - Operable</h3>
+    <p>2.4 Navigable: Provide ways to help users navigate, find content, and determine where they are</p>
+    <ul>
+      <li>Provide skip navigation</li>
+      <li>Provide descriptive and informative page titles, headings, form labels, other controls</li>
+      <li>Provide logical and intuitive focus/tab and heading order<sup>*</sup></li>
+      <li>Ensure that link/button(anything tabable) text stands on it own</li>
+      <li>Ensure visual focus state</li>
+      <li>Use ARIA landmark roles to identify various sections of the page</li>
+    </ul>
+  </a-slide>
+  <a-slide>
+    <h3>WCAG2 - Understandable</h3>
+    <p>3.1 Readable: Make text content readable and understandable</p>
+    <ul>
+      <li>Page language is identified</li>
+      <li>Provide accessible instructions and contextual info via .visuallyhidden content</li>
+    </ul>
+  </a-slide>
+  <a-slide>
+    <h3>WCAG2 - Understandable</h3>
+    <p>3.2 Predictable: Make Web pages appear and operate in predictable ways</p>
+    <ul>
+      <li>Avoid changing context upon user focus or input</li>
+      <li>Communicate significant status or content updates</li>
+      <li>Reduce audible clutter by providing concise, non-repetitive content	</li>
+      <li>Provide consistent navigation</li>
+    </ul>
+  </a-slide>
+  <a-slide>
+    <h3>WCAG2 - Understandable</h3>
+    <p>3.3 Input Assistance: Help users avoid and correct mistakes</p>
+    <ul>
+      <li>Provide accessible input requirements and form validation </li>
+      <li>Provide suggestions/help for errors </li>
+    </ul>
+  </a-slide>
+  <a-slide>
+    <h3>Section 508</h3>
+    <ul> 
+      <li part="part">US standard</li>
+      <li part="part">Changing soon to adopt WCAG2 standard</li>
+      <li part="part">Roughly maps to WCAG2 Level A</li>
+    </ul>
+  </a-slide>
+  <a-slide>
+    <h3>Compliance vs. Usability</h3>
+    <ul>
+      <li part="part">Inclusivity and usability vs. specific wording of guidelines</li>
+    </ul>
+  </a-slide>
+  <a-slide>
+    <h2>WAI ARIA</h2>
+  </a-slide>
+  <a-slide>
+    <h3>Modern A11y Challenges</h3>
+    <div part="part">
+      <p><strong>Dynamic UI:</strong> content updates, state changes not communicated</p>
+      <ul>
+        <li>Dynamic errors/notifications</li>
+        <li>View updates in single-page apps</li>
+      </ul>
+    </div>
+    <div part="part">
+      <p><strong>Custom UI:</strong> role and purpose of non-native widgets not understood</p>
+      <ul>
+        <li>Custom drop-down menus</li>
+        <li>Modals</li>
+        <li>Tooltips</li>
+        <li>Accordion content</li>
+      </ul>
+    </div>
+  </a-slide>
+  <a-slide>
+    <h3>ARIA Powers Modern A11y</h3>
+    <p>ARIA specifies a set of attributes that allow us to set and communicate:</p>
+    <ul>
+      <li>States: <code>aria-enabled</code>, <code>aria-selected</code></li>
+      <li>Properties: <code>aria-haspopup</code></li>
+      <li>Roles and Landmarks: <code>role="dialog"</code>, <code>role="contentinfo"</code></li>
+      <li>Relationships: <code>aria-labelledby</code>, <code>aria-controls</code></li>
+      <li>Live Regions: <code>aria-live</code></li>
+    </ul>
+  </a-slide>
+  <a-slide data-state="intro">
+    <h2>Screen Readers and Browsers</h2>
+  </a-slide>
+  <a-slide>
+    <h3>Page Navigation</h3>
+    <p>Two types of focus:</p>
+    <div part="part">Browser focus
+      <ul>
+        <li>Natively focusable elements(input, links, buttons, etc.)</li>
+        <li>Use tab key to navigate</li>
+      </ul>
+    </div>
+    <div part="part">Screen reader(virtual focus)
+      <ul>
+        <li>Navigate element-by-element</li>
+        <li>Specific elements
+          <ul>
+            <li>Headings</li>
+            <li>Landmarks</li>
+            <li>Form elements</li>
+            <li>Links, buttons</li>
+          </ul>
+        </li>
+        <li>Use arrow keys and modifiers to explore structure</li>
+      </ul>
+    </div>
+  </a-slide>
+  <a-slide>
+    <h3>Screen Reader Stats</h3>
+    <flex-line>
+      <div flex="" part="">
+        <h4>Desktop</h4>
+        <ul>
+          <li>JAWS(Win) ~50%, mostly in US</li>
+          <li>NVDA(Win) ~20%, higher in EU</li>
+          <li>VoiceOver(MacOS) ~10%</li>
+        </ul>
+      </div>
+      <div flex="" part="">
+        <h4>Mobile</h4>
+        <ul>
+          <li>VoiceOver(iOS) ~60%, higher in US</li>
+          <li>Talkback(Android) ~20%</li>
+        </ul>
+      </div>
+    </flex-line>
+    <p part="part">Source: <a href="http://webaim.org/projects/screenreadersurvey5/" target="webaim">WebAIM.org Screen Reader Survey 5</a></p>
+  </a-slide>
+  <a-slide>
+    <h3>Screen Reader Testing</h3>
+    <ul>
+      <li part="part">Test early and often!</li>
+      <li part="part">Support for a11y features varies</li>
+      <li part="part">Recommended Browser/Screen Reader Combos:
+        <ul>
+          <li>NVDA / Firefox (Windows)</li>
+          <li>JAWS / IE (Windows)</li>
+          <li>VoiceOver / Safari (MacOS/iOS)</li>
+          <li>TalkBack / Firefox (Android)</li>
+        </ul>
+      </li>
+    </ul>
+  </a-slide>
+  <a-slide data-state="intro">
+    <h2>VoiceOver Demos</h2>
+  </a-slide>
+  <a-slide>
+    <h3>MacOS Commands</h3>
+    <ul> 
+      <li>⌘-F5 - Start/Stop VO</li>
+      <li>Ctrl-Opt(VO)-U - Web Rotor</li>
+      <li>Left-Up/Right-Up - Change Quick Nav rotor</li>
+      <li>Left-Right - Quick Nav On/Off</li>
+    </ul>
+  </a-slide>
+  <a-slide>
+    <h3>iOS Commands</h3>
+    <ul>
+      <li>Triple-press home key - Start/Stop VO </li>
+      <li>Swipe right/left - move focus to next/previous element</li>
+      <li>Swipe down/up - move focus to next/previous element types</li>
+    </ul>
+  </a-slide>
+  <a-slide data-state="intro">
+    <h2>Implementation - Core Accessibility</h2>
+  </a-slide>
+  <a-slide data-state="intro">
+    <h2>Headings</h2>
+  </a-slide>
+  <a-slide>
+    <h3>Importance</h3>
+    <ul>
+      <li class="fragment">Headings and heading order are important to understanding page hierarchy</li>
+      <li class="fragment">AT allows users to navigate pages via headings</li>
+    </ul>
+  </a-slide>
+  <a-slide>
+    <h3>Usage</h3>
+    <ul>
+      <li class="fragment">Use headings consistently from page to page</li>
+      <li class="fragment">Heading order must not increase by more than one</li>
+    </ul>
+    <ul>
+      <li>Good: h1, h2, h2, h3, h4, h2, h3</li>
+      <li>Not good: h1, h2, h4, h4, h2, h5</li>
+      <li class="fragment">One H1 per page*(per Citi team)</li>
+      <li class="fragment">Modals should always start w/H1</li>
+    </ul>
+  </a-slide>
+  <a-slide>
+    <h3>Handle with care</h3>
+    <ul>
+      <li class="fragment">Add headings to your UI only if they are part of a larger strategy</li>
+    </ul>
+    <ul>
+      <li>Don't add headings to the page randomly - follow the copy deck</li>
+    </ul>
+  </a-slide>
+  <a-slide data-state="map">
+    <h3>Landmarks</h3>
+    <h4>Landmarks improve navigation and understanding of page structure</h4>
+    <table part="">
+      <thead>
+        <tr>
+          <th>Role</th>
+          <th>HTML Tag</th>
+          <th>Usage</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="hl">
+          <td>banner</td>
+          <td><code>&lt;header role="banner"&gt; </code></td>
+          <td>once per view</td>
+          <td>Page header</td>
+        </tr>
+        <tr class="hl">
+          <td>main</td>
+          <td><code>&lt;main role="main"&gt; </code></td>
+          <td>once per view</td>
+          <td>Main content area</td>
+        </tr>
+        <tr class="hl">
+          <td>contentinfo</td>
+          <td><code>&lt;footer role="contentinfo"&gt; </code></td>
+          <td>once per view</td>
+          <td>Page footer</td>
+        </tr>
+        <tr>
+          <td>search</td>
+          <td>-</td>
+          <td>multiple</td>
+          <td>Search form</td>
+        </tr>
+        <tr>
+          <td>form</td>
+          <td>-</td>
+          <td>multiple</td>
+          <td>Don't use unless a form plays a significant role in page</td>
+        </tr>
+        <tr>
+          <td>navigation</td>
+          <td><code>&lt;nav role="navigation"&gt; </code></td>
+          <td>multiple</td>
+          <td>Use with label/heading</td>
+        </tr>
+        <tr>
+          <td>complementary</td>
+          <td><code>&lt;aside role="complementary"&gt; </code></td>
+          <td>multiple</td>
+          <td>Use with label/heading</td>
+        </tr>
+        <tr>
+          <td>application</td>
+          <td>-</td>
+          <td>!avoid</td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </a-slide>
+  <a-slide data-state="map">
+    <h3>Landmark Usage</h3>
+    <h4>At a minimum, all pages should have:</h4>
+    <ul part="">
+      <li>banner  - <code>&lt;header role="banner"&gt; </code></li>
+      <li>main - <code>&lt;main role="main"&gt; </code></li>
+      <li>contentinfo - <code>&lt;footer role="contentinfo"&gt; </code></li>
+    </ul>
+    <p part=""><strong>Goal:</strong> ensure that all content resides in a landmark region and, in doing so, no content is orphaned </p>
+  </a-slide>
+  <a-slide data-state="map">
+    <h3>Landmark Tips</h3>
+    <h4> </h4>
+    <ul>
+      <li part="">Create a landmark strategy, use it consistently</li>
+      <li part="">Use labels for generic landmarks (e.g. navigation, complementary)</li>
+      <li part="">Some HTML5 sectioning elements are landmarks by default</li>
+      <li part="">Use HTML5 element <em>and</em> role</li>
+      <li part="">Don't overuse</li>
+    </ul>
+    <code-block language="html">
+       
+               # examples
+      		<section role="complementary" aria-labelledby="module_heading">
+      			<h2 id="module_heading">Frequently Asked Questions</h2>
+      		</section>
+      		<header role="banner"></header>
+      		<footer role="presentation"></footer>
+      		<main role="main"></main>
+       
+    </code-block>
+  </a-slide>
+  <a-slide>
+    <h2>Tables</h2>
+  </a-slide>
+  <a-slide>
+    <h3>Table Headings</h3>
+    <ul>
+      <li>TD's must be associated with any row or column headings via proper use of TH.</li>
+      <li>TH's are used by screen readers to label each TD</li>
+      <li>Use the <code>scope</code> attribute to denote that a header applies to the entire row or column</li>
+    </ul>
+  </a-slide>
+  <a-slide>
+    <h3>Column Heading</h3>
+    <ul>
+      <li>Use table headings(<code>&lt;th&gt;</code>) to label rows and columns</li>
+    </ul>
+    <code-block language="html">
+       
+      	&lt;table&gt;
+      	  &lt;tr&gt;
+      	    &lt;th&gt;Date&lt;/th&gt;
+      	    &lt;th&gt;Event&lt;/th&gt;
+      	    &lt;th&gt;Venue&lt;/th&gt;
+      	  &lt;/tr&gt;
+      	  &lt;tr&gt;
+      	    &lt;td&gt;12 February&lt;/td&gt;
+      	    &lt;td&gt;Waltz with Strauss&lt;/td&gt;
+      	    &lt;td&gt;Main Hall&lt;/td&gt;
+      	  &lt;/tr&gt;
+      	&lt;/table&gt;
+       
+    </code-block>
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Event</th>
+          <th>Venue</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>12 February</td>
+          <td>Waltz with Strauss</td>
+          <td>Main Hall</td>
+        </tr>
+        <tr>
+          <td>13 February</td>
+          <td>Waltz with Strauss</td>
+          <td>Main Hall</td>
+        </tr>
+        <tr>
+          <td>14 February</td>
+          <td>Waltz with Strauss</td>
+          <td>Main Hall</td>
+        </tr>
+        <tr>
+          <td>15 February</td>
+          <td>Waltz with Strauss</td>
+          <td>Main Hall</td>
+        </tr>
+      </tbody>
+    </table>
+  </a-slide>
+  <a-slide>
+    <h3>Column and Row Headings</h3>
+    <ul>
+      <li>Use table headings(<code>&lt;th scope="row|col"&gt;</code>) to label rows and columns</li>
+    </ul>
+    <code-block language="html">
+       
+      	&lt;table&gt;
+      	  &lt;caption&gt;Delivery slots:&lt;/caption&gt;
+      	  &lt;tr&gt;
+      	    &lt;td&gt;&lt;/td&gt;
+      	    &lt;th scope="col"&gt;Monday&lt;/th&gt;
+      	    &lt;th scope="col"&gt;Tuesday&lt;/th&gt;
+      	    &lt;th scope="col"&gt;Wednesday&lt;/th&gt;
+      	  &lt;/tr&gt;
+      	  &lt;tr&gt;
+      	    &lt;th scope="row"&gt;09:00 - 11:00&lt;/th&gt;
+      	    &lt;td&gt;Closed&lt;/td&gt;
+      	    &lt;td&gt;Open&lt;/td&gt;
+      	    &lt;td&gt;Open&lt;/td&gt;
+      	  &lt;/tr&gt;
+      	  ...
+      	&lt;/table&gt;
+       
+    </code-block>
+    <table>
+      <thead>
+        <tr>
+          <td> </td>
+          <th scope="col">Mon</th>
+          <th scope="col">Tues</th>
+          <th scope="col">Wed</th>
+          <th scope="col">Thurs</th>
+          <th scope="col">Fri</th>
+          <th scope="col">Sat</th>
+          <th scope="col">Sun</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">09:00 - 11:00</th>
+          <td>Closed</td>
+          <td>Open</td>
+          <td>Open</td>
+          <td>Closed</td>
+          <td>Open</td>
+          <td>Closed</td>
+          <td>Open</td>
+        </tr>
+        <tr>
+          <th>11:00 - 1:00</th>
+          <td>Open</td>
+          <td>Closed</td>
+          <td>Open</td>
+          <td>Closed</td>
+          <td>Closed</td>
+          <td>Closed</td>
+          <td>Open</td>
+        </tr>
+        <tr>
+          <th>1:00 - 3:00</th>
+          <td>Open</td>
+          <td>Open</td>
+          <td>Closed</td>
+          <td>Closed</td>
+          <td>Closed</td>
+          <td>Closed</td>
+          <td>Open</td>
+        </tr>
+      </tbody>
+    </table>
+  </a-slide>
+  <a-slide>
+    <h2>Forms</h2>
+  </a-slide>
+  <a-slide>
+    <h3>Labeling</h3>
+    <p>All form inputs must have a label(e.g. <code>&lt;label&gt;</code>)</p>
+    <code-block language="html">
+       
+      	&lt;div&gt;
+      	  &lt;label for="url"&gt;Website: &lt;/label&gt;
+      	  &lt;input type="url" name="url" id="url"&gt;
+      	&lt;/div&gt;
+      	
+      	&lt;div&gt;
+      	  &lt;input aria-label="Zip Code" type="text" name="zip" id="zip"&gt;
+      	&lt;/div&gt;
+       
+    </code-block>
+  </a-slide>
+  <a-slide>
+    <h3>Grouping</h3>
+    <p>Associated form controls should be grouped using <code>&lt;fieldset&gt;</code> and <code>&lt;legend&gt;</code></p>
+    <code-block language="html">
+       
+      	&lt;fieldset&gt;
+      	  &lt;legend&gt;Output format&lt;/legend&gt;
+      	  &lt;div&gt;
+      	    &lt;input type="radio" name="format" id="txt" value="txt" checked&gt;
+      	    &lt;label for="txt"&gt;Text file&lt;/label&gt;
+      	  &lt;/div&gt;
+      	  &lt;div&gt;
+      	    &lt;input type="radio" name="format" id="csv" value="csv"&gt;
+      	    &lt;label for="csv"&gt;CSV file&lt;/label&gt;
+      	  &lt;/div&gt;
+      	&lt;/fieldset&gt;
+       
+    </code-block>
+    <form method="post" action="#">
+      <fieldset>
+        <legend>Output format</legend>
+        <div>
+          <input id="txt" type="radio" name="format" value="txt" checked=""/>
+          <label for="txt">Text file</label>
+        </div>
+        <div>
+          <input id="csv" type="radio" name="format" value="csv"/>
+          <label for="csv">CSV file</label>
+        </div>
+        <div>
+          <input id="html" type="radio" name="format" value="HTML"/>
+          <label for="html">HTML file</label>
+        </div>
+      </fieldset>
+    </form>
+  </a-slide>
+  <a-slide data-state="intro">
+    <h2>Alternate Text</h2>
+  </a-slide>
+  <a-slide>
+    <h3>Use Cases</h3>
+    <ul>
+      <li>Translating visual content to spoken content</li>
+      <li>Provide additional information for interactive elements:
+        <ul>
+          <li>links</li>
+          <li>buttons</li>
+          <li>form elements</li>
+        </ul>
+      </li>
+    </ul>
+  </a-slide>
+  <a-slide>
+    <h3>Images</h3>
+    <ul>
+      <li><code>&lt;img&gt;</code> always requires <code>alt</code> attribute</li>
+      <li>Alt text speaks for image content</li>
+      <li>Non-essential images should have <code>alt=""</code></li>
+    </ul>
+  </a-slide>
+  <a-slide>
+    <h3>Labeling Techniques</h3>
+    <ul>
+      <li><code>aria-label="{label text}"</code> - </li>
+      <li><code>aria-labelledby="{id list}"</code> - use other element(s) as label</li>
+      <li><code>aria-describedby="{id list}"</code> - use other element(s) as description</li>
+      <li><code>.visuallyhidden</code> - CSS technique, visually hides content, available to screen reader</li>
+    </ul>
+  </a-slide>
+  <a-slide data-state="intro">
+    <h2>Focus Management</h2>
+  </a-slide>
+  <a-slide>
+    <h3>What is focus management?</h3>
+    <p>Care and management of where focus is</p>
+    <div part="part">
+      <h4>Placing focus on an element:</h4>
+      <ul>
+        <li>speaks the contents of that element</li>
+        <li>reads associated label text - <code>aria-label</code>, <code>aria-labelledby</code></li>
+        <li>moves keyboard focus where we want it to be</li>
+      </ul>
+    </div>
+    <div part="part">
+      <h4>Tips:</h4>
+      <ul>
+        <li>don't move keyboard focus unless necessary</li>
+        <li>take care not to lose keyboard focus</li>
+        <li>placing focus can help communicate context changes</li>
+      </ul>
+    </div>
+  </a-slide>
+  <a-slide data-state="intro">
+    <h2>Modals</h2>
+  </a-slide>
+  <a-slide>
+    <h3>Modal Goals</h3>
+    <ul>
+      <li>Focus and maintain user's attention on modal UI</li>
+      <li>Prevent interaction with background content
+        <ul>
+          <li>Tabbing</li>
+          <li>Screen reader virtual navigation</li>
+        </ul>
+      </li>
+    </ul>
+  </a-slide>
+  <a-slide>
+    <h3>Modal Setup</h3>
+    <code-block language="html">
+       
+      	&lt;div role="dialog" aria-labelledby="label" aria-describedby="description"&gt;
+      	  &lt;h1 id="label"&gt;Account Alert: Account Overdrawn&lt;/h1&gt;
+      	  &lt;p id="description"&gt;Your account ending in 4567 has a negative balance of -$15.76&lt;/p&gt;
+      	  &lt;button&gt;Transfer Funds&lt;/button&gt;
+      	  &lt;button&gt;Remind Me Later&lt;/button&gt;
+      	&lt;/div&gt;
+       
+    </code-block>
+    <ul>
+      <li part="part">Start heading order with H1</li>
+      <li part="part"><code>role="dialog"</code> announces "dialog"</li>
+      <li part="part"><code>aria-labelledby="label"</code> announces #label</li>
+      <li part="part"><code>aria-describedby="description"</code> announces #description</li>
+    </ul>
+    <p part="part">End result: "Account Overdrawn dialog Your account ending in 4567 has a negative balance of -$15.76, Transfer Funds button"</p>
+  </a-slide>
+  <a-slide>
+    <h3>Modal Open</h3>
+    <ul>
+      <li>Focus on first focusable or dialog body</li>
+      <li>Isolate modal UI from view content(<code>aria-hidden</code>)</li>
+      <li>Dialog is announced</li>
+    </ul>
+  </a-slide>
+  <a-slide>
+    <h3>Modal Close</h3>
+    <ul>
+      <li>Return focus to initiating button, last focused or main content</li>
+      <li>Reset everything</li>
+    </ul>
+  </a-slide>
+  <a-slide>
+    <h3>Modal Isolation Detail</h3>
+    <code-block language="html">
+       
+      	<body>
+      	  <div data-isolate class="shell" aria-hidden="true">
+      	    #all main page content lives here
+      	  </div>
+      	    #modals live at body end, hidden until activated
+      	  <section data-modal-id="test_modal" role="dialog">...</section>
+      	</body>
+       
+    </code-block>
+    <ul>
+      <li part="">Main content lives in one element - <code>div(data-isolate)</code></li>
+      <li part="">Hide page content from screen reader - <code>aria-hidden=true</code></li>
+      <li part="">Focus listener returns page focus to modal</li>
+    </ul>
+  </a-slide>
+  <a-slide data-state="intro">
+    <h2>Modern A11y Goals and Tips</h2>
+    <flex-line>
+      <div flex="">
+        <ul>
+          <li part="">Create lean, elegant, robust technical solutions</li>
+          <li part="">Minimize use of ARIA - rely on semantic code first</li>
+          <li part="">Aim for widest screen reader/browser support possible</li>
+          <li part="">Test often - don't wait until the end</li>
+          <li part="">Developers and QA peeps should be screen reader experts</li>
+        </ul>
+      </div>
+      <div flex="">
+        <ul>
+          <li part="">Make a11y a core part of every step of project lifecycle</li>
+          <li part="">Accessibility is a team effort</li>
+          <li part="">Make accessibility easier, repeatable</li>
+          <li part="">Be wary of "accessible" frameworks - test for yourself, improve</li>
+          <li part="">Give back - share what you know, report issues</li>
+        </ul>
+      </div>
+    </flex-line>
+  </a-slide>
+  <a-slide data-state="intro">
+    <h2>Thanks!</h2>
+  </a-slide>
+  <footer role="contentinfo"><span> <a href="/">Home</a></span></footer>
+</body>
